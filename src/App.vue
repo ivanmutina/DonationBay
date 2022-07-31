@@ -1,5 +1,13 @@
 <template>
   <div id="app">
+    <nav class="navbar">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <img src="@/assets/donation_bay_logo_transparent2.png" alt="" height="40" class="d-inline-block align-text-top" />
+        </a>
+      </div>
+    </nav>
+
     <nav>
       <router-link to="/">Home</router-link>
       |
