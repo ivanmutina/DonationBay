@@ -1,21 +1,37 @@
 <template>
   <div id="app">
-    <nav class="navbar">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">
+    <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid mt-1">
+        <a class="navbar-brand ms-3" href="/">
           <img src="@/assets/donation_bay_logo_transparent2.png" alt="" height="40" class="d-inline-block align-text-top" />
         </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <form class="d-flex ms-5" role="search">
+            <input class="form-control fas" type="search" placeholder="Pretraži" aria-label="Search" />
+          </form>
+
+          <ul class="navbar-nav ms-md-auto me-5">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/">Početna</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/login">Prijava</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="signup">Registracija</a>
+            </li>
+          </ul>
+        </div>
       </div>
     </nav>
 
-    <nav>
-      <router-link to="/">Home</router-link>
-      |
-      <router-link to="/login">Login</router-link>
-      |
-      <router-link to="/signup">Signup</router-link>
-    </nav>
-    <router-view />
+    <div class="container">
+      <router-view />
+    </div>
   </div>
 </template>
 
@@ -28,7 +44,7 @@
   color: #2c3e50;
 }
 
-nav {
+#nav {
   padding: 30px;
 
   a {
