@@ -16,13 +16,13 @@
 
           <ul class="navbar-nav ms-md-auto me-5">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/">Početna</a>
+              <a class="nav-link active" aria-current="page" href="/"><b>Home</b></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/login">Prijava</a>
+              <a class="nav-link" href="/login"><b>Login</b></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="signup">Registracija</a>
+              <a class="nav-link" href="signup"><b>Sign up</b></a>
             </li>
           </ul>
         </div>
