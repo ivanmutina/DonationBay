@@ -22,7 +22,7 @@
               <a class="nav-link" href="/login"><b>Login</b></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="signup"><b>Sign up</b></a>
+              <a class="nav-link" href="/signup"><b>Sign up</b></a>
             </li>
           </ul>
         </div>
