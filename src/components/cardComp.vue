@@ -2,7 +2,7 @@
   <div class="card text-center">
     <div class="card-header">Naslov</div>
     <div class="card-body">
-      <img :src="info" alt="" />
+      <img class="card-img-top" :src="info" alt="" />
     </div>
     <ul class="list-group list-group-flush">
       <li class="list-group-item">

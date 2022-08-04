@@ -16,7 +16,7 @@
 
           <ul class="navbar-nav ms-md-auto me-5">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/"><b>Home</b></a>
+              <a class="nav-link" href="/home"><b>Test</b></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/login"><b>Login</b></a>
