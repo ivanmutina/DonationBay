@@ -49,7 +49,8 @@ export default {
       signInWithEmailAndPassword(auth, this.username, this.password)
         .then((result) => {
           // Signed in
-          console.log("Uspjesna prijava", result);
+          console.log("Uspjesna prijava");
+          this.$router.push({ name: "dashboard" });
         })
         .catch(() => {
           console.log("Doslo je do greske");

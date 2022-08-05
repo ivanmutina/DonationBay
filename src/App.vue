@@ -2,7 +2,10 @@
   <div id="app">
     <nav class="navbar navbar-expand-lg">
       <div class="container-fluid mt-1">
-        <a class="navbar-brand ms-3" href="/">
+        <a v-if="!store.currentUser" class="navbar-brand ms-3" href="/">
+          <img src="@/assets/donation_bay_logo_transparent2.png" alt="" height="40" class="d-inline-block align-text-top" />
+        </a>
+        <a v-if="store.currentUser" class="navbar-brand ms-3" href="/dashboard">
           <img src="@/assets/donation_bay_logo_transparent2.png" alt="" height="40" class="d-inline-block align-text-top" />
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -15,14 +18,14 @@
           </form>
 
           <ul class="navbar-nav ms-md-auto me-5">
-            <li class="nav-item">
-              <a class="nav-link" href="/home"><b>Test</b></a>
-            </li>
-            <li class="nav-item">
+            <li v-if="!store.currentUser" class="nav-item">
               <a class="nav-link" href="/login"><b>Login</b></a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/signup"><b>Sign up</b></a>
+            <li v-if="!store.currentUser" class="nav-item">
+              <a class="nav-link" href="/signup"><b>Sign Up</b></a>
+            </li>
+            <li v-if="store.currentUser" class="nav-item">
+              <a class="nav-link" @click.prevent="logoutClick()" href="#"><b>Sign Out</b></a>
             </li>
           </ul>
         </div>
@@ -34,6 +37,51 @@
     </div>
   </div>
 </template>
+
+<script>
+import store from "@/store";
+import { initializeApp } from "@/firebase.js";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import router from "@/router";
+
+const auth = getAuth();
+
+// promjene stanja korisnika
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // user is signed in
+    console.log("***", user.email + " is signed in.");
+    store.currentUser = user.email;
+
+    const uid = user.uid;
+  } else {
+    // user is not signed in
+    console.log("*** No user");
+    store.currentUser = null;
+
+    /*
+    if (router.name !== "login") {
+      router.push({ name: "home" });
+    }*/
+  }
+});
+
+export default {
+  name: "app",
+  data() {
+    return {
+      store,
+    };
+  },
+  methods: {
+    logoutClick() {
+      signOut(auth).then(() => {
+        this.$router.push({ name: "login" });
+      });
+    },
+  },
+};
+</script>
 
 <style lang="scss">
 #app {
