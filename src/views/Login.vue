@@ -13,15 +13,15 @@
           <div class="col-3"></div>
           <div class="col">
             <label for="exampleInputEmail1" class="form-label">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
+            <input v-model="username" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
 
             <label for="exampleInputPassword1" class="form-label mt-3">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" />
+            <input v-model="password" type="password" class="form-control" id="exampleInputPassword1" />
           </div>
           <div class="col-3"></div>
 
           <div class="col-12 mt-4">
-            <button type="" class="btn btn-primary">Login</button>
+            <button type="button" @click="loginClick()" class="btn btn-primary">Login</button>
           </div>
         </form>
         <!-- -->
@@ -30,4 +30,31 @@
   </div>
 </template>
 
-<style scoped></style>
+<script>
+import { initializeApp } from "@/firebase.js";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
+const auth = getAuth();
+
+export default {
+  name: "login",
+  data() {
+    return {
+      username: "",
+      password: "",
+    };
+  },
+  methods: {
+    loginClick() {
+      signInWithEmailAndPassword(auth, this.username, this.password)
+        .then((result) => {
+          // Signed in
+          console.log("Uspjesna prijava", result);
+        })
+        .catch(() => {
+          console.log("Doslo je do greske");
+        });
+    },
+  },
+};
+</script>

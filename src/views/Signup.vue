@@ -7,37 +7,37 @@
           <h1>Sign up!</h1>
           <div class="col-md-6">
             <label for="name" class="form-label">First Name</label>
-            <input type="text" class="form-control" id="name" />
+            <input v-model="firstName" type="text" class="form-control" id="name" />
           </div>
           <div class="col-md-6">
             <label for="lastName" class="form-label">Last Name</label>
-            <input type="text" class="form-control" id="lastName" />
+            <input v-model="lastName" type="text" class="form-control" id="lastName" />
           </div>
           <div class="col-md-6">
             <label for="inputEmail" class="form-label">Email</label>
-            <input type="email" class="form-control" id="inputEmail" />
+            <input v-model="username" type="email" class="form-control" id="inputEmail" />
           </div>
           <div class="col-md-6">
-            <label for="inputPassword4" class="form-label">Password</label>
-            <input type="password" class="form-control" id="inputPassword4" />
+            <label for="inputPassword" class="form-label">Password</label>
+            <input v-model="password" type="password" class="form-control" id="inputPassword" placeholder="Should be atleast 6 characters" />
           </div>
 
           <div class="col-md-6">
             <label for="inputCountry" class="form-label">Country</label>
-            <input type="text" class="form-control" id="inputCountry" />
+            <input v-model="country" type="text" class="form-control" id="inputCountry" />
           </div>
           <div class="col-md-4">
             <label for="inputCountry" class="form-label">City</label>
-            <input type="text" class="form-control" id="inputCity" />
+            <input v-model="city" type="text" class="form-control" id="inputCity" />
           </div>
           <div class="col-md-2">
             <label for="inputZip" class="form-label">Zip</label>
-            <input type="text" class="form-control" id="inputZip" />
+            <input v-model="zipCode" type="text" class="form-control" id="inputZip" />
           </div>
           <div class="col-12"></div>
 
           <div class="col-12">
-            <button type="" class="btn btn-primary">Create account</button>
+            <button type="button" @click="signupClick" class="btn btn-primary">Create account</button>
           </div>
         </form>
 
@@ -51,4 +51,41 @@
   </div>
 </template>
 
-<style scoped></style>
+<script>
+import { initializeApp } from "@/firebase.js";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+
+const auth = getAuth();
+
+export default {
+  name: "signup",
+  data() {
+    return {
+      firstName: "",
+      lastName: "",
+      username: "",
+      password: "",
+      country: "",
+      city: "",
+      zipCode: "",
+    };
+  },
+  methods: {
+    // kada korisnik stisne button
+    signupClick() {
+      createUserWithEmailAndPassword(auth, this.username, this.password)
+        .then((userCredential) => {
+          // Signed in
+          console.log("Uspjesna reg");
+          const user = userCredential.user;
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          // ..
+        });
+    },
+  },
+};
+</script>

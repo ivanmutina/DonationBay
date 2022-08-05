@@ -1,7 +1,6 @@
 <template>
-  <div class="row">
-    <div class="col-8"><card-comp v-for="card in cards" :key="card" :info="card" /></div>
-    <div class="col-4"></div>
+  <div class="container border row">
+    <div class="col-6 mt-5"><card-comp v-for="card in cards" :key="card" :info="card" /></div>
   </div>
 </template>
 
