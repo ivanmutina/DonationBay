@@ -52,18 +52,20 @@ onAuthStateChanged(auth, (user) => {
     // user is signed in
     console.log("***", user.email + " is signed in.");
     store.currentUser = user.email;
-
     const uid = user.uid;
+
+    if (currentRoute.meta.needsUser) {
+      router.push({ name: "home" });
+    }
   } else {
     // user is not signed in
     console.log("*** No user");
     store.currentUser = null;
-
-    /*
-    if (router.name !== "login") {
-      router.push({ name: "home" });
-    }*/
   }
+
+  // sadrzi trenutnu rutu / provjerava stanje
+  const currentRoute = router.currentRoute;
+  console.log("Trenutna ruta je: ", currentRoute);
 });
 
 export default {

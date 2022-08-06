@@ -18,37 +18,14 @@
         <img class="img-fluid w-100 h-75 hover-shadow" src="@/assets/donate_phone.png" alt="" />
       </div>
     </div>
-    <!--
-    <div class="row align-items-center mt-5">
-      
-      <div class="col border"><card-comp v-for="card in cards" :key="card" :info="card" /></div>
-      <div class="col border"></div>
-    </div>
-    -->
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import cardComp from "@/components/cardComp.vue";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-let cards = [];
-
-cards = ["https://picsum.photos/id/1/600", "https://picsum.photos/id/2/600", "https://picsum.photos/id/3/600"];
-
-export default {
-  name: "landingPage",
-  data: () => {
-    return {
-      cards: cards,
-    };
-  },
-  components: {
-    cardComp,
-  },
-};
+export default {};
 
 // AOS animacija
 AOS.init({

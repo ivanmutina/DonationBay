@@ -34,10 +34,11 @@
             <label for="inputZip" class="form-label">Zip</label>
             <input v-model="zipCode" type="text" class="form-control" id="inputZip" />
           </div>
-          <div class="col-12"></div>
+
+          <div class="col-12 form-text">You'll be automatically transferred to dashboard if you registered successfully.</div>
 
           <div class="col-12">
-            <button type="button" @click="signupClick" class="btn btn-primary">Create account</button>
+            <button type="button" @click.prevent="signupClick" class="btn btn-primary">Create account</button>
           </div>
         </form>
 
@@ -76,6 +77,7 @@ export default {
       createUserWithEmailAndPassword(auth, this.username, this.password)
         .then((userCredential) => {
           // Signed in
+          this.$router.push({ name: "dashboard" });
           console.log("Uspjesna reg");
           const user = userCredential.user;
           // ...

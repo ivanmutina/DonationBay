@@ -21,7 +21,7 @@
           <div class="col-3"></div>
 
           <div class="col-12 mt-4">
-            <button type="button" @click="loginClick()" class="btn btn-primary">Login</button>
+            <button type="button" @click.prevent="loginClick()" class="btn btn-primary">Login</button>
           </div>
         </form>
         <!-- -->
@@ -50,7 +50,7 @@ export default {
         .then((result) => {
           // Signed in
           console.log("Uspjesna prijava");
-          this.$router.push({ name: "dashboard" });
+          this.$router.replace({ name: "dashboard" });
         })
         .catch(() => {
           console.log("Doslo je do greske");
