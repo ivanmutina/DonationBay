@@ -1,6 +1,6 @@
 <template>
-  <div class="container border row">
-    <div class="col-6 mt-5"><card-comp v-for="card in cards" :key="card" :info="card" /></div>
+  <div class="container row border gap-5 mb-5 align-items-center justify-content-center">
+    <card-comp class="col-5 mt-5 mb-5" v-for="card in cards" :key="card" :info="card" />
   </div>
 </template>
 

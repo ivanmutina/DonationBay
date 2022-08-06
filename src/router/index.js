@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import home from '../views/Home.vue'
 import store from '@/store'
+import {getAuth} from '@/firebase'
 
 
 Vue.use(VueRouter)
@@ -52,6 +53,22 @@ const router = new VueRouter({
 
 // poziva se prije promjene svake rute
 // pogleda gdje smo i gdje idemo i next se pokrece ako dozvolimo
+
+
+router.beforeEach( (to, from, next) => {
+  
+  const user = getAuth().currentUser
+
+  if(!user && to.meta.needsUser){
+    next("/");
+  }else if (user && !to.meta.needsUser) {
+    next("/dashboard");
+  } else {
+    next();
+  }
+
+})
+
 
 
 export default router

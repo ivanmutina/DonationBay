@@ -2,12 +2,12 @@
   <div id="app">
     <nav class="navbar navbar-expand-lg">
       <div class="container-fluid mt-1">
-        <a v-if="!store.currentUser" class="navbar-brand ms-3" href="/">
+        <router-link v-if="!store.currentUser" class="navbar-brand ms-3" to="/">
           <img src="@/assets/donation_bay_logo_transparent2.png" alt="" height="40" class="d-inline-block align-text-top" />
-        </a>
-        <a v-if="store.currentUser" class="navbar-brand ms-3" href="/dashboard">
+        </router-link>
+        <router-link v-if="store.currentUser" class="navbar-brand ms-3" to="/dashboard">
           <img src="@/assets/donation_bay_logo_transparent2.png" alt="" height="40" class="d-inline-block align-text-top" />
-        </a>
+        </router-link>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -48,6 +48,9 @@ const auth = getAuth();
 
 // promjene stanja korisnika
 onAuthStateChanged(auth, (user) => {
+  // sadrzi trenutnu rutu / provjerava stanje
+  const currentRoute = router.currentRoute;
+
   if (user) {
     // user is signed in
     console.log("***", user.email + " is signed in.");
@@ -55,17 +58,15 @@ onAuthStateChanged(auth, (user) => {
     const uid = user.uid;
 
     if (currentRoute.meta.needsUser) {
-      router.push({ name: "home" });
+      router.replace({ name: "home" });
+    } else {
+      router.replace({ name: "dashboard" });
     }
   } else {
     // user is not signed in
     console.log("*** No user");
     store.currentUser = null;
   }
-
-  // sadrzi trenutnu rutu / provjerava stanje
-  const currentRoute = router.currentRoute;
-  console.log("Trenutna ruta je: ", currentRoute);
 });
 
 export default {
@@ -78,7 +79,7 @@ export default {
   methods: {
     logoutClick() {
       signOut(auth).then(() => {
-        this.$router.push({ name: "login" });
+        this.$router.replace({ name: "login" });
       });
     },
   },
