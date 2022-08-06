@@ -19,10 +19,13 @@
 
           <ul class="navbar-nav ms-md-auto me-5">
             <li v-if="!store.currentUser" class="nav-item">
-              <a class="nav-link" href="/login"><b>Login</b></a>
+              <router-link class="nav-link" to="/login"><b>Login</b></router-link>
             </li>
             <li v-if="!store.currentUser" class="nav-item">
-              <a class="nav-link" href="/signup"><b>Sign Up</b></a>
+              <router-link class="nav-link" to="/signup"><b>Sign Up</b></router-link>
+            </li>
+            <li v-if="store.currentUser" class="nav-item">
+              <a class="nav-link" href="#"><b>Upload</b></a>
             </li>
             <li v-if="store.currentUser" class="nav-item">
               <a class="nav-link" @click.prevent="logoutClick()" href="#"><b>Sign Out</b></a>
@@ -97,7 +100,6 @@ export default {
 
 #nav {
   padding: 30px;
-
   a {
     font-weight: bold;
     color: #2c3e50;

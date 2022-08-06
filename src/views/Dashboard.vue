@@ -1,6 +1,14 @@
 <template>
-  <div class="container row border gap-5 mb-5 align-items-center justify-content-center">
-    <card-comp class="col-5 mt-5 mb-5" v-for="card in cards" :key="card" :info="card" />
+  <div class="container row gap-5 mb-5 align-items-center justify-content-center">
+    <section class="wrapper">
+      <div class="container-fostrap">
+        <div class="content">
+          <div class="row">
+            <card-comp class="col-5 mt-5 mb-5" v-for="card in cards" :key="card" :info="card" />
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -23,3 +31,58 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,100,900);
+
+html,
+body {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  background: #fff;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+}
+
+.wrapper {
+  display: table;
+  height: 100%;
+  width: 100%;
+}
+
+.container-fostrap {
+  display: table-cell;
+  padding: 1em;
+  text-align: center;
+  vertical-align: middle;
+}
+.fostrap-logo {
+  width: 100px;
+  margin-bottom: 15px;
+}
+h1.heading {
+  color: #fff;
+  font-size: 1.15em;
+  font-weight: 900;
+  margin: 0 0 0.5em;
+  color: #505050;
+}
+@media (min-width: 450px) {
+  h1.heading {
+    font-size: 3.55em;
+  }
+}
+@media (min-width: 760px) {
+  h1.heading {
+    font-size: 3.05em;
+  }
+}
+@media (min-width: 900px) {
+  h1.heading {
+    font-size: 3.25em;
+    margin: 0 0 0.3em;
+  }
+}
+</style>
