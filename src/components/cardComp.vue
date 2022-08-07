@@ -2,7 +2,7 @@
   <div class="col-xs-12 col-sm-4">
     <div class="card">
       <a class="img-card" href="#">
-        <img :src="info" />
+        <img :src="info.url" />
       </a>
       <div class="card-content">
         <h4 class="card-title">

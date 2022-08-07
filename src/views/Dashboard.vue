@@ -1,11 +1,52 @@
 <template>
-  <div class="container row border gap-5 mt-5 align-items-center justify-content-center">
+  <div class="container row gap-5 align-items-center justify-content-center">
+    <div class="row align-items-center">
+      <div class="col-lg-6">
+        <form class="row g-3 col-md-12" @submit.prevent="postNewImage">
+          <!-- -->
+          <p>Upload image of your stuff you wish to give as a donation.</p>
+          <div class="col-3"></div>
+          <div class="col form-group">
+            <label for="imageUrl" class="mb-2">Image URL</label>
+            <input v-model="newImageUrl" type="text" class="form-control ml-2" placeholder="Enter the image URL" id="imageUrl" />
+            <div class="form-group">
+              <label for="imageDescription" class="mt-2 mb-2">Description</label>
+              <input v-model="newImageDescription" type="text" class="form-control ml-2" placeholder="Enter the image description" id="imageDescription" />
+            </div>
+          </div>
+          <div class="col-3"></div>
+
+          <div class="col-12 mt-4">
+            <button type="submit" class="btn btn-primary">
+              Upload
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="13" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z" />
+              </svg>
+            </button>
+          </div>
+        </form>
+        <!-- -->
+      </div>
+
+      <div class="col-lg-6">
+        <img class="img-fluid hover-shadow" src="@/assets/upload.png" alt="" />
+      </div>
+      <p>
+        Or scroll down and find something for yourself!
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z" />
+        </svg>
+      </p>
+
+      <hr />
+    </div>
+
     <section class="wrapper">
       <div class="container-fostrap">
         <div class="content">
           <div class="container">
             <div class="row">
-              <card-comp class="col-5 mt-2 mb-3" v-for="card in cards" :key="card" :info="card" />
+              <card-comp class="col-5 mb-3" v-for="card in cards" :key="card.id" :info="card" />
             </div>
           </div>
         </div>
@@ -17,20 +58,74 @@
 
 <script>
 import cardComp from "@/components/cardComp.vue";
+import { initializeApp, db } from "@/firebase.js";
+import { doc, collection, addDoc, getDocs, orderBy, query, limit } from "firebase/firestore";
+import store from "@/store.js";
 
 let cards = [];
-
-// cards = ["https://picsum.photos/id/1/400", "https://picsum.photos/id/2/400", "https://picsum.photos/id/3/400", "https://picsum.photos/id/4/400"];
 
 export default {
   name: "dashboard",
   data: () => {
     return {
-      cards: cards,
+      cards: [],
+      store,
+      newImageUrl: "",
+      newImageDescription: "",
     };
   },
   components: {
     cardComp,
+  },
+  mounted() {
+    this.getPosts();
+  },
+  methods: {
+    getPosts() {
+      console.log("Firebase dohvat... ");
+
+      // referenciram se na collection
+      const docRef = collection(db, "posts");
+
+      getDocs(docRef).then((query) => {
+        query.forEach((doc) => {
+          console.log("ID: ", doc.id);
+          console.log("Podaci: ", doc.data());
+
+          // da ne pozivamo data tri puta jer su ostali podaci u data, ne id
+          const data = doc.data();
+
+          this.cards.push({
+            id: doc.id,
+            time: data.posted_at,
+            description: data.desc,
+            url: data.url,
+          });
+        });
+      });
+    },
+    // poziva se kada kliknemo upload
+    postNewImage() {
+      console.log("Upload button clicked");
+      const imageUrl = this.newImageUrl;
+      const imageDescription = this.newImageDescription;
+
+      // Add a new document with a generated id.
+      const docRef = addDoc(collection(db, "posts"), {
+        url: imageUrl,
+        desc: imageDescription,
+        email: store.currentUser,
+        posted_at: Date.now(),
+      })
+        .then(() => {
+          console.log("Spremljeno", doc);
+          this.newImageDescription = "";
+          this.newImageUrl = "";
+        })
+        .catch(() => {
+          console.log("Neuspjesan upload");
+        });
+    },
   },
 };
 </script>
@@ -85,5 +180,11 @@ h1.heading {
     font-size: 3.25em;
     margin: 0 0 0.3em;
   }
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
 }
 </style>

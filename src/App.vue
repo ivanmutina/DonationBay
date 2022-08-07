@@ -31,10 +31,6 @@
                   <a class="dropdown-item" href="#">Settings</a>
                 </li>
                 <li>
-                  <router-link class="dropdown-item" to="/upload">Upload</router-link>
-                </li>
-                <li><hr class="dropdown-divider" /></li>
-                <li>
                   <a class="dropdown-item" @click.prevent="logoutClick()" href="#">Sign Out </a>
                 </li>
               </ul>
