@@ -24,11 +24,20 @@
             <li v-if="!store.currentUser" class="nav-item">
               <router-link class="nav-link" to="/signup"><b>Sign Up</b></router-link>
             </li>
-            <li v-if="store.currentUser" class="nav-item">
-              <a class="nav-link" href="#"><b>Upload</b></a>
-            </li>
-            <li v-if="store.currentUser" class="nav-item">
-              <a class="nav-link" @click.prevent="logoutClick()" href="#"><b>Sign Out</b></a>
+            <li v-if="store.currentUser" class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><b> Profile </b></a>
+              <ul class="dropdown-menu" style="right: 0; left: auto">
+                <li>
+                  <a class="dropdown-item" href="#">Settings</a>
+                </li>
+                <li>
+                  <router-link class="dropdown-item" to="/upload">Upload</router-link>
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" @click.prevent="logoutClick()" href="#">Sign Out </a>
+                </li>
+              </ul>
             </li>
           </ul>
         </div>
