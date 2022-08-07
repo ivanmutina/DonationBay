@@ -36,6 +36,10 @@
 </template>
 
 <script>
+import { initializeApp, db } from "@/firebase.js";
+import { doc, collection, addDoc, docRef } from "firebase/firestore";
+import store from "@/store";
+
 export default {
   name: "upload",
   data() {
@@ -45,11 +49,27 @@ export default {
     };
   },
   methods: {
+    // poziva se kada kliknemo upload
     postNewImage() {
-      console.log("Radi");
+      console.log("Upload button clicked");
+      const imageUrl = this.newImageUrl;
+      const imageDescription = this.newImageDescription;
 
-      const imageUrl = "";
-      const imageDescription = "";
+      // Add a new document with a generated id.
+      const docRef = addDoc(collection(db, "posts"), {
+        url: imageUrl,
+        desc: imageDescription,
+        email: store.currentUser,
+        posted_at: Date.now(),
+      })
+        .then(() => {
+          console.log("Spremljeno", doc);
+          this.newImageDescription = "";
+          this.newImageUrl = "";
+        })
+        .catch(() => {
+          console.log("Neuspjesan upload");
+        });
     },
   },
 };

@@ -20,7 +20,7 @@ import cardComp from "@/components/cardComp.vue";
 
 let cards = [];
 
-cards = ["https://picsum.photos/id/1/400", "https://picsum.photos/id/2/400", "https://picsum.photos/id/3/400", "https://picsum.photos/id/4/400"];
+// cards = ["https://picsum.photos/id/1/400", "https://picsum.photos/id/2/400", "https://picsum.photos/id/3/400", "https://picsum.photos/id/4/400"];
 
 export default {
   name: "dashboard",

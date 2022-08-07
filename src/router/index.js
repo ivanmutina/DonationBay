@@ -64,8 +64,6 @@ const router = new VueRouter({
 
 // poziva se prije promjene svake rute
 // pogleda gdje smo i gdje idemo i next se pokrece ako dozvolimo
-
-
 router.beforeEach( (to, from, next) => {
   
   const user = getAuth().currentUser
@@ -79,7 +77,5 @@ router.beforeEach( (to, from, next) => {
   }
 
 })
-
-
 
 export default router
