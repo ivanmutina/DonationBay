@@ -1,5 +1,5 @@
 <template>
-  <div class="col-xs-10 col-sm-4">
+  <div class="col-xs-12 col-sm-4">
     <div class="card">
       <a class="img-card" href="#">
         <img :src="info" />
@@ -8,13 +8,13 @@
         <h4 class="card-title">
           <a href="#"> Bootstrap 3 Carousel FadeIn Out Effect </a>
         </h4>
-        <p class="">Tutorial to make a carousel bootstrap by adding more wonderful effect fadein ...</p>
-        <p><b>Price: </b></p>
-        <p><b>Cause: </b></p>
-        <p><b>Pickup location: </b></p>
+        <p>Tutorial to make a carousel bootstrap by adding more wonderful effect fadein ...</p>
+        <p><b>Price:</b></p>
+        <p><b>Cause:</b></p>
+        <p><b>Pickup location:</b></p>
       </div>
       <div class="card-read-more">
-        <a href="" class="btn btn-link btn-block"> Donate! </a>
+        <a href="#" class="btn btn-link btn-block"> Donate! </a>
       </div>
     </div>
   </div>
@@ -28,13 +28,6 @@ export default {
 </script>
 
 <style scoped>
-h1.heading {
-  color: #fff;
-  font-size: 1.15em;
-  font-weight: 900;
-  margin: 0 0 0.5em;
-  color: #505050;
-}
 .card {
   display: block;
   margin-bottom: 20px;
@@ -82,6 +75,6 @@ h1.heading {
   padding: 10px;
   font-weight: 600;
   text-transform: uppercase;
-  color: 078fcd;
+  color: #078fcd;
 }
 </style>

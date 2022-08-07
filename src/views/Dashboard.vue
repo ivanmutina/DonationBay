@@ -1,15 +1,18 @@
 <template>
-  <div class="container row gap-5 mb-5 align-items-center justify-content-center">
+  <div class="container row border gap-5 mt-5 align-items-center justify-content-center">
     <section class="wrapper">
       <div class="container-fostrap">
         <div class="content">
-          <div class="row">
-            <card-comp class="col-5 mt-5 mb-5" v-for="card in cards" :key="card" :info="card" />
+          <div class="container">
+            <div class="row">
+              <card-comp class="col-5 mt-2 mb-3" v-for="card in cards" :key="card" :info="card" />
+            </div>
           </div>
         </div>
       </div>
     </section>
   </div>
+  <!-- <card-comp class="col-5 mt-5 mb-5" v-for="card in cards" :key="card" :info="card" /> -->
 </template>
 
 <script>
@@ -17,7 +20,7 @@ import cardComp from "@/components/cardComp.vue";
 
 let cards = [];
 
-cards = ["https://picsum.photos/id/1/600", "https://picsum.photos/id/2/600", "https://picsum.photos/id/3/600", "https://picsum.photos/id/4/600"];
+cards = ["https://picsum.photos/id/1/400", "https://picsum.photos/id/2/400", "https://picsum.photos/id/3/400", "https://picsum.photos/id/4/400"];
 
 export default {
   name: "dashboard",
@@ -33,8 +36,6 @@ export default {
 </script>
 
 <style scoped>
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,100,900);
-
 html,
 body {
   -moz-box-sizing: border-box;
