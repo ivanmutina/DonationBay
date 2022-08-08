@@ -87,7 +87,8 @@ export default {
       // referenciram se na collection
       const docRef = collection(db, "posts");
 
-      getDocs(docRef).then((query) => {
+      getDocs(query(docRef, orderBy("posted_at", "desc"), limit(12))).then((query) => {
+        this.cards = []; // isprazni kartice
         query.forEach((doc) => {
           console.log("ID: ", doc.id);
           console.log("Podaci: ", doc.data());
@@ -121,6 +122,9 @@ export default {
           console.log("Spremljeno", doc);
           this.newImageDescription = "";
           this.newImageUrl = "";
+
+          // dohvacam da se kartica odmah pokaze pri postanju
+          this.getPosts();
         })
         .catch(() => {
           console.log("Neuspjesan upload");

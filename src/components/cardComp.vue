@@ -8,6 +8,9 @@
         <h4 class="card-title">
           <a href="#"> Bootstrap 3 Carousel FadeIn Out Effect </a>
         </h4>
+        <p>
+          <small class="text-muted">{{ postedFromNow }}</small>
+        </p>
         <p>Tutorial to make a carousel bootstrap by adding more wonderful effect fadein ...</p>
         <p><b>Price:</b></p>
         <p><b>Cause:</b></p>
@@ -21,9 +24,16 @@
 </template>
 
 <script>
+import moment from "moment";
+
 export default {
   props: ["info"],
   name: "cardComp",
+  computed: {
+    postedFromNow() {
+      return moment(this.info.time).fromNow();
+    },
+  },
 };
 </script>
 
