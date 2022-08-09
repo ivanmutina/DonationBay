@@ -7,8 +7,8 @@
           <p>Upload image of your stuff you wish to give as a donation.</p>
           <div class="col-3"></div>
           <div class="col form-group">
-            <label for="imageUrl" class="mb-2">Image URL</label>
-            <input v-model="newImageUrl" type="text" class="form-control ml-2" placeholder="Enter the image URL" id="imageUrl" />
+            <!-- <input v-model="newImageUrl" type="text" class="form-control ml-2" placeholder="Enter the image URL" id="imageUrl" /> -->
+            <croppa :width="288" :height="290" placeholder="Choose the image" v-model="imageReference"></croppa>
             <div class="form-group">
               <label for="imageDescription" class="mt-2 mb-2">Description</label>
               <input v-model="newImageDescription" type="text" class="form-control ml-2" placeholder="Enter the image description" id="imageDescription" />
@@ -72,6 +72,7 @@ export default {
       store,
       newImageUrl: "",
       newImageDescription: "",
+      imageReference: null,
     };
   },
   components: {

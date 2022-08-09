@@ -6,7 +6,7 @@
       </a>
       <div class="card-content">
         <h4 class="card-title">
-          <a href="#"> Bootstrap 3 Carousel FadeIn Out Effect </a>
+          <a href="#"> {{ info.description }} </a>
         </h4>
         <p>
           <small class="text-muted">{{ postedFromNow }}</small>
