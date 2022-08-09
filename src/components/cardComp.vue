@@ -6,15 +6,15 @@
       </a>
       <div class="card-content">
         <h4 class="card-title">
-          <a href="#"> {{ info.description }} </a>
+          <a href="#"> {{ info.title }} </a>
         </h4>
         <p>
           <small class="text-muted">{{ postedFromNow }}</small>
         </p>
-        <p>Tutorial to make a carousel bootstrap by adding more wonderful effect fadein ...</p>
-        <p><b>Price:</b></p>
-        <p><b>Cause:</b></p>
-        <p><b>Pickup location:</b></p>
+        <p>{{ info.Description }}</p>
+        <p><b>Price:</b> {{ info.price }}</p>
+        <p><b>Cause:</b> {{ info.cause }}</p>
+        <p><b>Pickup location:</b> {{ info.loc }}</p>
       </div>
       <div class="card-read-more">
         <a href="#" class="btn btn-link btn-block"> Donate! </a>

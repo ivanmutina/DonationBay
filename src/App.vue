@@ -13,10 +13,6 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarNav">
-          <form class="d-flex ms-5" role="search">
-            <input class="form-control fas" type="search" placeholder="Search" aria-label="Search" />
-          </form>
-
           <ul class="navbar-nav ms-md-auto me-5">
             <li v-if="!store.currentUser" class="nav-item">
               <router-link class="nav-link" to="/login"><b>Login</b></router-link>
