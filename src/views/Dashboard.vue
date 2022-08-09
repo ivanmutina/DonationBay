@@ -2,12 +2,55 @@
   <div class="container row gap-5 align-items-center justify-content-center">
     <div class="row align-items-center">
       <div class="col-lg-6">
-        <form class="row g-3 col-md-12" @submit.prevent="postNewImage">
-          <!-- -->
-          <p>Upload image of your stuff you wish to give as a donation.</p>
+        <p>Upload image of your stuff you wish to give as a donation.</p>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Start giving away!</button>
+        <!-- Modal -->
+        <div class="modal fade modal-xl" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Upload</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="container-fluid border">
+                  <div class="row border">
+                    <div class="col-md-3 border"></div>
+                    <div class="col-md border">
+                      <form @submit.prevent="postNewImage" class="border mt-3" id="test">
+                        <input v-model="newImageUrl" type="text" class="form-control ml-2 mb-3" placeholder="Enter the image URL" id="imageUrl" />
+                        <croppa :width="350" :height="350" placeholder="Choose the image" v-model="imageReference"></croppa>
+                        <br />
+                        <label for="imageDescription" class="mt-2 mb-2">Description</label>
+                        <input v-model="newImageDescription" type="text" class="form-control ml-2" placeholder="Enter the image description" id="imageDescription" />
+                        <button type="submit" class="btn btn-primary mt-3">
+                          Upload
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="13" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z" />
+                          </svg>
+                        </button>
+                      </form>
+                    </div>
+                    <div class="col-md-3 border"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- GRANICA -->
+        <!--
+        <form class="row border g-3 col-md-12" @submit.prevent="postNewImage">
+          
+          
           <div class="col-3"></div>
           <div class="col form-group">
-            <!-- <input v-model="newImageUrl" type="text" class="form-control ml-2" placeholder="Enter the image URL" id="imageUrl" /> -->
+             <input v-model="newImageUrl" type="text" class="form-control ml-2" placeholder="Enter the image URL" id="imageUrl" /> 
             <croppa :width="288" :height="290" placeholder="Choose the image" v-model="imageReference"></croppa>
             <div class="form-group">
               <label for="imageDescription" class="mt-2 mb-2">Description</label>
@@ -24,7 +67,7 @@
               </svg>
             </button>
           </div>
-        </form>
+        </form> -->
         <!-- -->
       </div>
 
@@ -58,7 +101,7 @@
 
 <script>
 import cardComp from "@/components/cardComp.vue";
-import { initializeApp, db } from "@/firebase.js";
+import { initializeApp, db, getStorage, ref, uploadBytes, getDownloadURL } from "@/firebase.js";
 import { doc, collection, addDoc, getDocs, orderBy, query, limit } from "firebase/firestore";
 import store from "@/store.js";
 
@@ -91,9 +134,6 @@ export default {
       getDocs(query(docRef, orderBy("posted_at", "desc"), limit(12))).then((query) => {
         this.cards = []; // isprazni kartice
         query.forEach((doc) => {
-          console.log("ID: ", doc.id);
-          console.log("Podaci: ", doc.data());
-
           // da ne pozivamo data tri puta jer su ostali podaci u data, ne id
           const data = doc.data();
 
@@ -109,27 +149,51 @@ export default {
     // poziva se kada kliknemo upload
     postNewImage() {
       console.log("Upload button clicked");
-      const imageUrl = this.newImageUrl;
-      const imageDescription = this.newImageDescription;
 
-      // Add a new document with a generated id.
-      const docRef = addDoc(collection(db, "posts"), {
-        url: imageUrl,
-        desc: imageDescription,
-        email: store.currentUser,
-        posted_at: Date.now(),
-      })
-        .then(() => {
-          console.log("Spremljeno", doc);
-          this.newImageDescription = "";
-          this.newImageUrl = "";
+      // pretvaranje bytova u pravu sliku
+      this.imageReference.generateBlob((blobData) => {
+        console.log(blobData);
 
-          // dohvacam da se kartica odmah pokaze pri postanju
-          this.getPosts();
-        })
-        .catch(() => {
-          console.log("Neuspjesan upload");
-        });
+        // putanja + ime korisnika + "/" + ime slike
+        let imageName = "posts/" + store.currentUser + "/" + Date.now() + ".png";
+
+        const storage = getStorage();
+        const storageRef = ref(storage, imageName);
+
+        // 'file' comes from the Blob
+        uploadBytes(storageRef, blobData)
+          .then((result) => {
+            console.log(result);
+            // uspjesno spremanje i dobijanje URL-a slike
+            getDownloadURL(storageRef).then((url) => {
+              console.log("Javni url: ", url);
+
+              const imageDescription = this.newImageDescription;
+
+              // Add a new document with a generated id.
+              const docRef = addDoc(collection(db, "posts"), {
+                url: url,
+                desc: imageDescription,
+                email: store.currentUser,
+                posted_at: Date.now(),
+              })
+                .then(() => {
+                  console.log("Spremljeno", doc);
+                  this.newImageDescription = "";
+                  this.imageReference.remove();
+
+                  // dohvacam da se kartica odmah pokaze pri postanju
+                  this.getPosts();
+                })
+                .catch(() => {
+                  console.log("Neuspjesan upload");
+                });
+            });
+          })
+          .catch(() => {
+            console.log("Error");
+          });
+      });
     },
   },
 };
