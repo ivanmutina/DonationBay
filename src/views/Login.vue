@@ -21,7 +21,7 @@
           <div class="col-3"></div>
 
           <div class="col-12 mt-4">
-            <button type="button" @click.prevent="loginClick()" class="btn btn-primary">Login</button>
+            <button type="button " @click.prevent="loginClick()" class="btn btn-primary shadow">Login</button>
           </div>
         </form>
         <!-- -->

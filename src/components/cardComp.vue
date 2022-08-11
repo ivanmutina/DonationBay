@@ -11,7 +11,7 @@
         <p>
           <small class="text-muted">{{ postedFromNow }}</small>
         </p>
-        <p>{{ info.Description }}</p>
+        <p>{{ info.description }}</p>
         <p><b>Price:</b> {{ info.price }}</p>
         <p><b>Cause:</b> {{ info.cause }}</p>
         <p><b>Pickup location:</b> {{ info.loc }}</p>

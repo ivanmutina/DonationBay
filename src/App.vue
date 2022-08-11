@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg shadow-sm">
       <div class="container-fluid mt-1">
         <router-link v-if="!store.currentUser" class="navbar-brand ms-3" to="/">
           <img src="@/assets/donation_bay_logo_transparent2.png" alt="" height="40" class="d-inline-block align-text-top" />
@@ -15,16 +15,16 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-md-auto me-5">
             <li v-if="!store.currentUser" class="nav-item">
-              <router-link class="nav-link" to="/login"><b>Login</b></router-link>
+              <router-link class="nav-link text-primary" to="/login"><b>Login</b></router-link>
             </li>
             <li v-if="!store.currentUser" class="nav-item">
-              <router-link class="nav-link" to="/signup"><b>Sign Up</b></router-link>
+              <router-link class="nav-link text-primary" to="/signup"><b>Sign Up</b></router-link>
             </li>
             <li v-if="store.currentUser" class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><b> Profile </b></a>
+              <a class="nav-link dropdown-toggle text-primary" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><b> Profile </b></a>
               <ul class="dropdown-menu" style="right: 0; left: auto">
                 <li>
-                  <a class="dropdown-item" href="#">Settings</a>
+                  <router-link class="dropdown-item" to="/settings">Settings</router-link>
                 </li>
                 <li>
                   <a class="dropdown-item" @click.prevent="logoutClick()" href="#">Sign Out </a>

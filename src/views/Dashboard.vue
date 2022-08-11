@@ -2,8 +2,8 @@
   <div class="container row gap-5 align-items-center justify-content-center">
     <div class="row align-items-center">
       <div class="col-lg-6">
-        <p>Upload image of your stuff you wish to give as a donation.</p>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Start giving away!</button>
+        <h5>Upload image of your stuff you wish to give as a donation.</h5>
+        <button type="button" class="btn btn-primary shadow-lg mt-4" data-bs-toggle="modal" data-bs-target="#exampleModal">Start giving away!</button>
         <!-- Modal -->
         <div class="modal fade modal-lg" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-scrollable">
@@ -50,7 +50,7 @@
                 </div>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
               </div>
             </div>
           </div>
@@ -71,7 +71,7 @@
       <div class="col-md-4"></div>
       <div class="col">
         <form class="form-inline mt-3">
-          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
+          <input v-model="store.searchTerm" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
         </form>
       </div>
       <div class="col-md-4"></div>
@@ -89,7 +89,6 @@
       </div>
     </section>
   </div>
-  <!-- <card-comp class="col-5 mt-5 mb-5" v-for="card in cards" :key="card" :info="card" /> -->
 </template>
 
 <script>
