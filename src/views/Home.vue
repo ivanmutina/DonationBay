@@ -15,7 +15,7 @@
         </div>
       </div>
       <div class="col-lg-6">
-        <img class="img-fluid w-100 h-75 hover-shadow" src="@/assets/donate_phone.png" alt="" />
+        <img class="img-fluid w-100 h-75 hover-shadow" src="@/assets/donate.png" alt="" />
       </div>
     </div>
   </div>

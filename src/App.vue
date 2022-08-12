@@ -3,10 +3,10 @@
     <nav class="navbar navbar-expand-lg shadow-sm">
       <div class="container-fluid mt-1">
         <router-link v-if="!store.currentUser" class="navbar-brand ms-3" to="/">
-          <img src="@/assets/donation_bay_logo_transparent2.png" alt="" height="40" class="d-inline-block align-text-top" />
+          <img src="@/assets/logo.png" alt="" height="40" class="d-inline-block align-text-top" />
         </router-link>
         <router-link v-if="store.currentUser" class="navbar-brand ms-3" to="/dashboard">
-          <img src="@/assets/donation_bay_logo_transparent2.png" alt="" height="40" class="d-inline-block align-text-top" />
+          <img src="@/assets/logo.png" alt="" height="40" class="d-inline-block align-text-top" />
         </router-link>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
