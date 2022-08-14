@@ -8,15 +8,14 @@
 
       <div class="col-lg-6">
         <!-- -->
+        <h1>Hello</h1>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import signup from "./Signup.vue";
-
-console.log(signup.data.firstName);
+import store from "@/store.js";
 
 export default {};
 </script>

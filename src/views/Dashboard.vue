@@ -154,7 +154,7 @@ export default {
         console.log(blobData);
 
         // putanja + ime korisnika + "/" + ime slike
-        let imageName = "posts/" + store.currentUser + "/" + Date.now() + ".png";
+        let imageName = "posts/" + store.currentUser.email + "/" + Date.now() + ".png";
 
         const storage = getStorage();
         const storageRef = ref(storage, imageName);
@@ -178,7 +178,7 @@ export default {
                 title: imageTitle,
                 url: url,
                 desc: imageDescription,
-                email: store.currentUser,
+                email: store.currentUser.email,
                 price: imagePrice,
                 cause: imageCause,
                 location: imageLocation,

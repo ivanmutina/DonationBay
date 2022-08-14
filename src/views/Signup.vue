@@ -53,8 +53,10 @@
 </template>
 
 <script>
-import { initializeApp } from "@/firebase.js";
+import { initializeApp, db } from "@/firebase.js";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import store from "@/store.js";
 
 const auth = getAuth();
 
@@ -77,10 +79,21 @@ export default {
       createUserWithEmailAndPassword(auth, this.username, this.password)
         .then((userCredential) => {
           // Signed in
+          const userProfileData = {
+            username: this.username,
+            firstName: this.firstName,
+            lastName: this.lastName,
+            country: this.country,
+            city: this.city,
+            zipcode: this.zipCode,
+          };
+
           this.$router.push({ name: "dashboard" });
           console.log("Uspjesna reg");
           const user = userCredential.user;
-          // ...
+
+          // kreiram novi collection sa podacima profila
+          const userProfile = setDoc(doc(db, "users", userCredential.user.uid), userProfileData);
         })
         .catch((error) => {
           const errorCode = error.code;

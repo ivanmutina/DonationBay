@@ -58,7 +58,7 @@ onAuthStateChanged(auth, (user) => {
   if (user) {
     // user is signed in
     console.log("***", user.email + " is signed in.");
-    store.currentUser = user.email;
+    store.currentUser = user;
     const uid = user.uid;
 
     if (currentRoute.meta.needsUser) {
