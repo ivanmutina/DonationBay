@@ -2,7 +2,7 @@
   <div class="container row gap-5 align-items-center justify-content-center">
     <div class="row align-items-center">
       <div class="col-lg-6">
-        <h5>Upload image of your stuff you wish to give as a donation.</h5>
+        <h4>Upload image of stuff you wish to give as a donation.</h4>
         <button type="button" class="btn btn-primary shadow-lg mt-4" data-bs-toggle="modal" data-bs-target="#exampleModal">Start giving away!</button>
         <!-- Modal -->
         <div class="modal fade modal-lg" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

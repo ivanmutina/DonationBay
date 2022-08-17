@@ -95,10 +95,8 @@ export default {
           // kreiram novi collection sa podacima profila
           const userProfile = setDoc(doc(db, "users", userCredential.user.uid), userProfileData);
         })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          // ..
+        .catch(() => {
+          console.log("Neuspjesna registracija!");
         });
     },
   },

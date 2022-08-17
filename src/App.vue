@@ -21,7 +21,7 @@
               <router-link class="nav-link text-primary" to="/signup"><b>Sign Up</b></router-link>
             </li>
             <li v-if="store.currentUser" class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle text-primary" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><b> Profile </b></a>
+              <a class="nav-link dropdown-toggle text-primary" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><b>Profile</b></a>
               <ul class="dropdown-menu" style="right: 0; left: auto">
                 <li>
                   <router-link class="dropdown-item" to="/settings">Settings</router-link>
