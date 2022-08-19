@@ -36,6 +36,9 @@
                         <label for="imageLocation" class="mt-2 mb-2">Pickup location</label>
                         <input v-model="newImageLocation" type="text" class="form-control" id="imageLocation" />
 
+                        <label for="contact" class="mt-2 mb-2">Contact</label>
+                        <input v-model="newImageContact" type="text" class="form-control" id="contact" placeholder="Phone number or email" />
+
                         <button type="submit" class="btn btn-primary mt-3">
                           Upload
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="13" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
@@ -110,6 +113,7 @@ export default {
       newImagePrice: "",
       newImageCause: "",
       newImageLocation: "",
+      newImageContact: "",
       imageReference: null,
     };
   },
@@ -140,6 +144,7 @@ export default {
             cause: data.cause,
             price: data.price,
             loc: data.location,
+            con: data.contact,
             time: data.posted_at,
           });
         });
@@ -172,6 +177,7 @@ export default {
               const imagePrice = this.newImagePrice;
               const imageCause = this.newImageCause;
               const imageLocation = this.newImageLocation;
+              const imageContact = this.newImageContact;
 
               // Add a new document with a generated id.
               const docRef = addDoc(collection(db, "posts"), {
@@ -182,6 +188,7 @@ export default {
                 price: imagePrice,
                 cause: imageCause,
                 location: imageLocation,
+                contact: imageContact,
                 posted_at: Date.now(),
               })
                 .then(() => {
@@ -191,6 +198,7 @@ export default {
                   this.newImagePrice = "";
                   this.newImageCause = "";
                   this.newImageLocation = "";
+                  this.newImageContact = "";
                   this.imageReference.remove();
 
                   // dohvacam da se kartica odmah pokaze pri postanju

@@ -53,7 +53,7 @@ export default {
           this.$router.replace({ name: "dashboard" });
         })
         .catch(() => {
-          console.log("Doslo je do greske");
+          alert("Login failed. Please try again!");
         });
     },
   },

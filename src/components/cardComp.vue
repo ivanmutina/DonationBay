@@ -15,6 +15,7 @@
         <p><b>Price:</b> {{ info.price }}</p>
         <p><b>Cause:</b> {{ info.cause }}</p>
         <p><b>Pickup location:</b> {{ info.loc }}</p>
+        <p><b>Contact:</b> {{ info.con }}</p>
       </div>
       <div class="card-read-more">
         <a href="#" class="btn btn-link btn-block"> Donate! </a>

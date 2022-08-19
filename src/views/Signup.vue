@@ -96,7 +96,7 @@ export default {
           const userProfile = setDoc(doc(db, "users", userCredential.user.uid), userProfileData);
         })
         .catch(() => {
-          console.log("Neuspjesna registracija!");
+          alert("Registration failed. Please try again!");
         });
     },
   },
