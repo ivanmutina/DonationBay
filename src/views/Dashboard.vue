@@ -80,6 +80,8 @@
       <div class="col-md-4"></div>
     </div>
 
+    {{ store.searchTerm }}
+
     <section class="wrapper">
       <div class="container-fostrap">
         <div class="content">
@@ -117,6 +119,16 @@ export default {
       imageReference: null,
     };
   },
+
+  /*
+  computed: {
+    filteredCards() {
+      // logika filtiranja
+      return cards;
+    },
+  },
+
+  */
   components: {
     cardComp,
   },

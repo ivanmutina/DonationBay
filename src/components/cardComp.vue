@@ -53,7 +53,7 @@ export default {
 }
 .img-card {
   width: 100%;
-  height: 200px;
+  height: 300px;
   border-top-left-radius: 2px;
   border-top-right-radius: 2px;
   display: block;
@@ -61,7 +61,7 @@ export default {
 }
 .img-card img {
   width: 100%;
-  height: 200px;
+  height: 300px;
   object-fit: cover;
   transition: all 0.25s ease;
 }
