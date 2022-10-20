@@ -35,7 +35,7 @@
             <input v-model="zipCode" type="text" class="form-control" id="inputZip" />
           </div>
 
-          <div class="col-12 form-text">You'll be automatically transferred to dashboard if you registered successfully.</div>
+          <div class="col-12 form-text">You will be automatically transferred to dashboard if you registered successfully.</div>
 
           <div class="col-12">
             <button type="button" @click.prevent="signupClick" class="btn btn-primary shadow">Create account</button>

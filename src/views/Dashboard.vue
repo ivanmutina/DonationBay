@@ -80,14 +80,12 @@
       <div class="col-md-4"></div>
     </div>
 
-    {{ store.searchTerm }}
-
     <section class="wrapper">
       <div class="container-fostrap">
         <div class="content">
           <div class="container">
             <div class="row">
-              <card-comp class="col-5 mb-3" v-for="card in cards" :key="card.id" :info="card" />
+              <card-comp class="col-5 mb-3" v-for="card in filteredCards" :key="card.id" :info="card" />
             </div>
           </div>
         </div>
@@ -120,15 +118,22 @@ export default {
     };
   },
 
-  /*
   computed: {
     filteredCards() {
-      // logika filtiranja
-      return cards;
+      // filtriranje
+      let term = this.store.searchTerm;
+      let newCards = [];
+
+      for (let card of this.cards) {
+        if (card.title.indexOf(term) >= 0) {
+          newCards.push(card);
+        }
+      }
+
+      return newCards;
     },
   },
 
-  */
   components: {
     cardComp,
   },
