@@ -9,7 +9,7 @@
       <div class="col-lg-6">
         <!-- -->
         <form class="row g-3 col-md-12">
-          <h1>Hello <span style="color: blue">Ivan</span>!</h1>
+          <h1>Hello <span style="color: blue"></span>!</h1>
           <div class="col-12 form-text">Change your profile information</div>
           <div class="col-md-6">
             <label for="name" class="form-label">First Name</label>
@@ -22,15 +22,15 @@
 
           <div class="col-md-6">
             <label for="inputCountry" class="form-label">Country</label>
-            <input v-model="country" type="text" class="form-control" id="inputCountry" placeholder="" />
+            <input type="text" class="form-control" id="inputCountry" placeholder="" />
           </div>
           <div class="col-md-4">
             <label for="inputCountry" class="form-label">City</label>
-            <input v-model="city" type="text" class="form-control" id="inputCity" placeholder="" />
+            <input type="text" class="form-control" id="inputCity" placeholder="" />
           </div>
           <div class="col-md-2">
             <label for="inputZip" class="form-label">Zip</label>
-            <input v-model="zipCode" type="text" class="form-control" id="inputZip" placeholder="" />
+            <input type="text" class="form-control" id="inputZip" placeholder="" />
           </div>
 
           <div class="col-12 mt-4">
@@ -42,7 +42,7 @@
     </div>
     <div class="row">
       <div class="col-md-12">
-        <h1 class="mt-2 don">Your donation list</h1>
+        <h1 class="mt-2 don">Your uploads</h1>
         <table class="table table-striped table-bordered mt-4">
           <tbody class="table-group-divider">
             <tr>
@@ -60,8 +60,7 @@
               <td>s</td>
             </tr>
 
-              <listComp />
-              
+            <li></li>
           </tbody>
         </table>
       </div>
@@ -71,10 +70,22 @@
 
 <script>
 import store from "@/store.js";
-import List from '@/components/listComp.vue';
+import { db } from "@/firebase.js";
+import { doc, getDocs, getDoc } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+import { getDatabase, ref, onValue, child, get } from "firebase/database";
+
+const auth = getAuth();
+const user = auth.currentUser;
+const docRef = doc(db, "users", user.uid);
+const docSnap = getDoc(docRef);
+
+// dohvacam informacije o korisniku
+getDoc(doc(db, "users", user.uid)).then((docSnap) => {
+  console.log(docSnap.data().firstName);
+});
 
 export default {};
 </script>
 
-<st
-Listyle scoped></style>
+<style scoped></style>

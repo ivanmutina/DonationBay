@@ -31,7 +31,6 @@
 </template>
 
 <script>
-import { initializeApp } from "@/firebase.js";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const auth = getAuth();

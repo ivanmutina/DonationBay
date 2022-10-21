@@ -3,13 +3,13 @@
     <div class="row align-items-center">
       <div class="col-lg-6">
         <h4>Upload image of stuff you wish to give as a donation.</h4>
-        <button type="button" class="btn btn-primary shadow-lg mt-4" data-bs-toggle="modal" data-bs-target="#exampleModal">Start giving away!</button>
+        <button type="button" class="btn btn-primary shadow-lg mt-4" data-bs-toggle="modal" data-bs-target="#giveawayModal">Start giving away!</button>
         <!-- Modal -->
-        <div class="modal fade modal-lg" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade modal-lg" id="giveawayModal" tabindex="-1" aria-labelledby="giveawayModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Upload</h5>
+                <h5 class="modal-title" id="giveawayModalLabel">Upload</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
@@ -19,7 +19,7 @@
                     <div class="col-md">
                       <form @submit.prevent="postNewImage" class="mt-3" id="test">
                         <!-- -->
-                        <label for="imageTitle" class="mt-2 mb-2">Titlte</label>
+                        <label for="imageTitle" class="mt-2 mb-2">Title</label>
                         <input v-model="newImageTitle" type="text" class="form-control mb-3" id="imageTitle" />
 
                         <croppa :width="350" :height="350" placeholder="Choose the image" v-model="imageReference"></croppa>
@@ -45,6 +45,7 @@
                             <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z" />
                           </svg>
                         </button>
+
                         <!-- -->
                       </form>
                     </div>
@@ -100,8 +101,6 @@ import { initializeApp, db, getStorage, ref, uploadBytes, getDownloadURL } from 
 import { doc, collection, addDoc, getDocs, orderBy, query, limit } from "firebase/firestore";
 import store from "@/store.js";
 
-let cards = [];
-
 export default {
   name: "dashboard",
   data: () => {
@@ -125,7 +124,7 @@ export default {
       let newCards = [];
 
       for (let card of this.cards) {
-        if (card.title.indexOf(term) >= 0) {
+        if (card.title.toLowerCase().includes(term.toLowerCase())) {
           newCards.push(card);
         }
       }

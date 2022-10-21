@@ -35,7 +35,7 @@
             <input v-model="zipCode" type="text" class="form-control" id="inputZip" />
           </div>
 
-          <div class="col-12 form-text">You will be automatically transferred to dashboard if you registered successfully.</div>
+          <div class="col-12 form-text">You will be automatically transferred if registration is successful.</div>
 
           <div class="col-12">
             <button type="button" @click.prevent="signupClick" class="btn btn-primary shadow">Create account</button>
@@ -53,10 +53,9 @@
 </template>
 
 <script>
-import { initializeApp, db } from "@/firebase.js";
+import { db } from "@/firebase.js";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
-import store from "@/store.js";
 
 const auth = getAuth();
 

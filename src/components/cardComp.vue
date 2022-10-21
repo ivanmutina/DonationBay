@@ -18,7 +18,32 @@
         <p><b>Contact:</b> {{ info.con }}</p>
       </div>
       <div class="card-read-more">
-        <a href="#" class="btn btn-link btn-block"> Donate! </a>
+        <a href="#" class="btn btn-link btn-block" data-bs-toggle="modal" data-bs-target="#donateModal"> Donate! </a>
+      </div>
+
+      <!-- Modal -->
+      <div class="modal fade modal-sm" id="donateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Thank you! &#x2764;</h5>
+            </div>
+            <div class="modal-body">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-md">
+                    Thank you for deciding to do a good deed. &#x1F60D; Please contact the offerer.
+                    <p></p>
+                  </div>
+                  <div class="col-12 form-text">The offer will be removed by the offerer after the agreement.</div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
