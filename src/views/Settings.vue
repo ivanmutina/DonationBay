@@ -13,28 +13,28 @@
           <div class="col-12 form-text">Change your profile information</div>
           <div class="col-md-6">
             <label for="name" class="form-label">First Name</label>
-            <input type="text" class="form-control" id="name" placeholder="" />
+            <input v-model="updateFirstName" type="text" class="form-control" id="name" placeholder="" />
           </div>
           <div class="col-md-6">
             <label for="lastName" class="form-label">Last Name</label>
-            <input type="text" class="form-control" id="lastName" placeholder="" />
+            <input v-model="updateLastName" type="text" class="form-control" id="lastname" placeholder="" />
           </div>
 
           <div class="col-md-6">
             <label for="inputCountry" class="form-label">Country</label>
-            <input type="text" class="form-control" id="inputCountry" placeholder="" />
+            <input v-model="updateCountry" type="text" class="form-control" id="inputcountry" placeholder="" />
           </div>
           <div class="col-md-4">
-            <label for="inputCountry" class="form-label">City</label>
-            <input type="text" class="form-control" id="inputCity" placeholder="" />
+            <label for="inputCity" class="form-label">City</label>
+            <input v-model="updateCity" type="text" class="form-control" id="inputcity" placeholder="" />
           </div>
           <div class="col-md-2">
             <label for="inputZip" class="form-label">Zip</label>
-            <input type="text" class="form-control" id="inputZip" placeholder="" />
+            <input v-model="updateZip" type="text" class="form-control" id="inputzip" placeholder="" />
           </div>
 
           <div class="col-12 mt-4">
-            <button type="button" class="btn btn-primary shadow">Confirm changes</button>
+            <button type="button" @click.prevent="updateProfile" class="btn btn-primary shadow">Confirm changes</button>
           </div>
         </form>
         <!-- -->
@@ -46,21 +46,17 @@
         <table class="table table-striped table-bordered mt-4">
           <tbody class="table-group-divider">
             <tr>
-              <th scope="row">Order number</th>
               <th>Title</th>
               <th>Price</th>
               <th>Cause</th>
               <th>Pickup location</th>
             </tr>
             <tr>
-              <td>1</td>
               <td>f</td>
               <td>d</td>
               <td>d</td>
               <td>s</td>
             </tr>
-
-            <li></li>
           </tbody>
         </table>
       </div>
@@ -69,11 +65,9 @@
 </template>
 
 <script>
-import store from "@/store.js";
 import { db } from "@/firebase.js";
-import { doc, getDocs, getDoc } from "firebase/firestore";
+import { doc, getDocs, getDoc, updateDoc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
-import { getDatabase, ref, onValue, child, get } from "firebase/database";
 
 const auth = getAuth();
 const user = auth.currentUser;
@@ -85,7 +79,38 @@ getDoc(doc(db, "users", user.uid)).then((docSnap) => {
   console.log(docSnap.data().firstName);
 });
 
-export default {};
+export default {
+  name: "settings",
+  data() {
+    return {
+      updateFirstName: "",
+      updateLastName: "",
+      updateCountry: "",
+      updateCity: "",
+      updateZip: "",
+    };
+  },
+  methods: {
+    updateProfile() {
+      const updateData = {
+        firstName: this.updateFirstName,
+        lastName: this.updateLastName,
+        country: this.updateCountry,
+        city: this.updateCity,
+        zipcode: this.updateZip,
+      };
+
+      updateDoc(docRef, updateData)
+        .then((docRef) => {
+          console.log("Values has been updated");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    printUserName() {},
+  },
+};
 </script>
 
 <style scoped></style>

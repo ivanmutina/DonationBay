@@ -1,12 +1,12 @@
 <template>
   <div class="col-xs-12 col-sm-4">
     <div class="card">
-      <a class="img-card" href="#">
+      <div class="img-card">
         <img :src="info.url" />
-      </a>
+      </div>
       <div class="card-content">
         <h4 class="card-title">
-          <a href="#"> {{ info.title }} </a>
+          <a href="#" data-bs-toggle="modal" data-bs-target="#donateModal">{{ info.title }}</a>
         </h4>
         <p>
           <small class="text-muted">{{ postedFromNow }}</small>
