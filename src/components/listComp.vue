@@ -5,7 +5,7 @@
       <table class="table table-striped table-bordered mt-4">
         <tbody class="table-group-divider">
           <tr>
-            <th>Title</th>
+            <th>{{ list.title }}</th>
             <th>Price</th>
             <th>Cause</th>
             <th>Pickup location</th>
@@ -25,5 +25,8 @@
 <script>
 import cardComp from "@/components/cardComp.vue";
 
-export default {};
+export default {
+  props: ["list"],
+  name: "listComp",
+};
 </script>

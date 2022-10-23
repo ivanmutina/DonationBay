@@ -88,7 +88,7 @@ export default {
           };
 
           this.$router.push({ name: "dashboard" });
-          console.log("Uspjesna reg");
+          console.log("Successful registration!");
           const user = userCredential.user;
 
           // kreiram novi collection sa podacima profila

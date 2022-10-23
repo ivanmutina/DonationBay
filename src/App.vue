@@ -44,7 +44,6 @@
 
 <script>
 import store from "@/store";
-import { initializeApp } from "@/firebase.js";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import router from "@/router";
 

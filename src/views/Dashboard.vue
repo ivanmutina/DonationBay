@@ -97,7 +97,7 @@
 
 <script>
 import cardComp from "@/components/cardComp.vue";
-import { initializeApp, db, getStorage, ref, uploadBytes, getDownloadURL } from "@/firebase.js";
+import { db, getStorage, ref, uploadBytes, getDownloadURL } from "@/firebase.js";
 import { doc, collection, addDoc, getDocs, orderBy, query, limit } from "firebase/firestore";
 import store from "@/store.js";
 
@@ -141,7 +141,7 @@ export default {
   },
   methods: {
     getPosts() {
-      console.log("Firebase dohvat... ");
+      console.log("Firebase has loaded");
 
       // referenciram se na collection
       const docRef = collection(db, "posts");
