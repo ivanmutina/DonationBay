@@ -9,8 +9,11 @@
       <div class="col-lg-6">
         <!-- -->
         <form class="row g-3 col-md-12">
-          <h1>Hello <span style="color: blue">{{}}</span></h1>
-          <div class="col-12 form-text">If you want to change your profile information please fill out the form below.</div>
+          <h1>
+            Hello
+            <span style="color: blue">Ivan</span>
+          </h1>
+          <div class="col-12 form-text">If you want to change your profile information please fill out the form below &#128274;</div>
           <div class="col-md-6">
             <label for="name" class="form-label">First Name</label>
             <input v-model="updateFirstName" type="text" class="form-control" id="name" placeholder="" />
@@ -56,7 +59,9 @@
 
               <td>d</td>
               <td>
-                <button type="button" @click.prevent="deleteOffer" class="btn btn-danger shadow" onclick="getElementById('name').value = ''">Confirm changes</button>
+                <div>
+                  <button type="button" @click.prevent="deleteProfile" class="btn btn-danger shadow">Delete profile</button>
+                </div>
               </td>
             </tr>
           </tbody>
@@ -68,15 +73,15 @@
 
 <script>
 import { db } from "@/firebase.js";
-import { doc, getDoc, updateDoc, deleteDoc, deleteUser } from "firebase/firestore";
-import { getAuth, signOut } from "firebase/auth";
-import signup from "@/views/Signup.vue";
+import { doc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
+import { getAuth, signOut, deleteUser } from "firebase/auth";
+import router from "@/router";
 
 const auth = getAuth();
 const user = auth.currentUser;
-
 const docRef = doc(db, "users", user.uid);
-const postRef = doc(db, "posts", "2");
+
+const postRef = doc(db, "posts", "test");
 
 /* dohvacam informacije o korisniku
 
@@ -111,6 +116,11 @@ export default {
         updateDoc(docRef, updateData)
           .then((docRef) => {
             console.log("Values has been updated");
+            this.updateFirstName = "";
+            this.updateLastName = "";
+            this.updateCountry = "";
+            this.updateCity = "";
+            this.updateZip = "";
           })
           .catch((error) => {});
       } else {
@@ -120,7 +130,14 @@ export default {
 
     printProfile() {},
 
-    deleteProfile() {},
+    deleteProfile() {
+      deleteUser(user)
+        .then(() => {
+          console.log("User has been deleted!");
+          router.replace({ name: "login" });
+        })
+        .catch((error) => {});
+    },
 
     /*
     deleteOffer(doc) {
@@ -136,6 +153,7 @@ export default {
       }
     },*/
   },
+  computed: {},
 };
 </script>
 

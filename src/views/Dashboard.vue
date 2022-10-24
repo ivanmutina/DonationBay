@@ -221,7 +221,7 @@ export default {
                   this.getPosts();
                 })
                 .catch(() => {
-                  console.log("Neuspjesan upload");
+                  console.log("Unsuccessful upload");
                 });
             });
           })
