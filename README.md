@@ -2,7 +2,7 @@
 
 Projektni zadatak iz kolegija [Programsko inženjerstvo](ntankovic.unipu.hr/pi) [Fakulteta informatike u Puli](https://fipu.unipu.hr/)
 
-Izradio: [Ivan Mutina](https://github.com/ivanmutina) \
+Izradio: [Ivan Mutina](https://www.linkedin.com/in/ivan-mutina/) \
 Mentor: doc. dr. sc. [Nikola Tanković](https://fipu.unipu.hr/fipu/nikola.tankovic)
 
 ## Funkcionalnost

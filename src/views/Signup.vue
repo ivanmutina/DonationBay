@@ -4,7 +4,7 @@
       <div class="col-lg-6">
         <!-- -->
         <form class="row g-3 col-md-12">
-          <h1>Sign up!</h1>
+          <h1>Sign up! &#128274;</h1>
           <div class="col-md-6">
             <label for="name" class="form-label">First Name</label>
             <input v-model="firstName" type="text" class="form-control" id="name" />

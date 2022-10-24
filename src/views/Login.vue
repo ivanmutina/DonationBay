@@ -9,7 +9,7 @@
       <div class="col-lg-6">
         <form class="row g-3 col-md-12">
           <!-- -->
-          <h1 class="m-auto">Welcome back</h1>
+          <h1 class="m-auto">Hey again &#128273;</h1>
           <div class="col-3"></div>
           <div class="col">
             <label for="exampleInputEmail1" class="form-label">Email address</label>
