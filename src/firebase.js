@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore } from "firebase/firestore";
+import { collection, getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
@@ -12,8 +12,9 @@ const firebaseConfig = {
     appId: "1:782503376003:web:f7466ee2269ae9864997b6"
 };
 
+// init
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const storage = getStorage(app);
 
-export { initializeApp, db, getAuth, getStorage, ref, uploadBytes, getDownloadURL };
+export { initializeApp, db, getAuth, getStorage, ref, uploadBytes, getDownloadURL, storage };

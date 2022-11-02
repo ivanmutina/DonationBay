@@ -9,10 +9,7 @@
       <div class="col-lg-6">
         <!-- -->
         <form class="row g-3 col-md-12">
-          <h1>
-            Hello
-            <span style="color: blue">Ivan</span>
-          </h1>
+          <h1>Settings</h1>
           <div class="col-12 form-text">If you want to change your profile information please fill out the form below &#128274;</div>
           <div class="col-md-6">
             <label for="name" class="form-label">First Name</label>
@@ -39,6 +36,11 @@
           <div class="col-12 mt-4">
             <button type="button" @click.prevent="updateProfile" class="btn btn-primary shadow">Confirm changes</button>
           </div>
+          <div></div>
+          <div class="col-12 form-text mt-2">Beware, you can't regain access once it's deleted&#10071;</div>
+          <div class="col-12 mt-3">
+            <button type="button" @click.prevent="deleteProfile" class="btn btn-danger shadow">Delete account</button>
+          </div>
         </form>
         <!-- -->
       </div>
@@ -58,11 +60,7 @@
               <td>f</td>
 
               <td>d</td>
-              <td>
-                <div>
-                  <button type="button" @click.prevent="deleteProfile" class="btn btn-danger shadow">Delete profile</button>
-                </div>
-              </td>
+              <td></td>
             </tr>
           </tbody>
         </table>
@@ -72,24 +70,43 @@
 </template>
 
 <script>
-import { db } from "@/firebase.js";
-import { doc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
-import { getAuth, signOut, deleteUser } from "firebase/auth";
+import { db, deleteObject, storage, ref } from "@/firebase.js";
+import { doc, getDoc, getDocs, updateDoc, deleteDoc, collection, setDoc, query, where } from "firebase/firestore";
+import { getAuth, signOut, deleteUser, getIdToken } from "firebase/auth";
 import router from "@/router";
 
 const auth = getAuth();
 const user = auth.currentUser;
 const docRef = doc(db, "users", user.uid);
 
-const postRef = doc(db, "posts", "test");
+// collection ref
+const colUsersRef = collection(db, "users");
+const colPostsRef = collection(db, "posts");
 
-/* dohvacam informacije o korisniku
+// get users collection data
+getDocs(colUsersRef)
+  .then((snapshot) => {
+    let users = [];
+    snapshot.docs.forEach((doc) => {
+      users.push({ ...doc.data(), id: doc.id });
+    });
+    console.log(users);
+  })
+  .catch((error) => {});
 
-let ime = getDoc(doc(db, "users", user.uid)).then((docSnap) => {
-  console.log(docSnap.data().firstName);
-});
+// get posts collection data
+getDocs(colPostsRef)
+  .then((snapshot) => {
+    let posts = [];
+    snapshot.docs.forEach((doc) => {
+      posts.push({ ...doc.data(), id: doc.id });
+    });
+    console.log(posts);
+  })
+  .catch((error) => {});
 
-*/
+// queries
+const q = query(colUsersRef, where("username", "==", "test2@gmail.com"));
 
 export default {
   name: "settings",
@@ -122,36 +139,27 @@ export default {
             this.updateCity = "";
             this.updateZip = "";
           })
-          .catch((error) => {});
+          .catch(() => {});
       } else {
         alert("Please insert all your profile information!");
       }
     },
 
-    printProfile() {},
-
     deleteProfile() {
+      alert("Are you sure");
+
+      const userMail = user.email;
+      const queryPosts = query(colPostsRef, where("username", "==", userMail));
+
       deleteUser(user)
         .then(() => {
-          console.log("User has been deleted!");
-          router.replace({ name: "login" });
+          // User deleted.
+          signOut(auth).then(() => {
+            router.replace({ name: "login" });
+          });
         })
         .catch((error) => {});
     },
-
-    /*
-    deleteOffer(doc) {
-      if (confirm("Are you sure?")) {
-        deleteDoc(postRef)
-          .then(() => {
-            console.log("Entire Document has been deleted successfully.");
-          })
-          .catch((error) => {
-            console.log("Error!");
-          });
-      } else {
-      }
-    },*/
   },
   computed: {},
 };

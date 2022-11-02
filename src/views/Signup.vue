@@ -32,7 +32,7 @@
           </div>
           <div class="col-md-2">
             <label for="inputZip" class="form-label">Zip</label>
-            <input v-model="zipCode" type="text" class="form-control" id="inputZip" />
+            <input v-model="zipCode" type="number" class="form-control" id="inputZip" />
           </div>
 
           <div class="col-12 form-text">You will be automatically transferred if registration is successful.</div>
