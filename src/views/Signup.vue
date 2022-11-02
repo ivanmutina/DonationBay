@@ -95,7 +95,7 @@ export default {
           const userProfile = setDoc(doc(db, "users", userCredential.user.uid), userProfileData);
         })
         .catch(() => {
-          alert("Registration failed. Please try again!");
+          this.$alert("Registration failed. Please try again!");
         });
     },
   },

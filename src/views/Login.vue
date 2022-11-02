@@ -52,7 +52,7 @@ export default {
           this.$router.replace({ name: "dashboard" });
         })
         .catch(() => {
-          alert("Login failed. Please try again!");
+          this.$alert("Login failed. Please try again!");
         });
     },
   },

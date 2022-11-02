@@ -72,18 +72,20 @@
 <script>
 import { db, deleteObject, storage, ref } from "@/firebase.js";
 import { doc, getDoc, getDocs, updateDoc, deleteDoc, collection, setDoc, query, where } from "firebase/firestore";
-import { getAuth, signOut, deleteUser, getIdToken } from "firebase/auth";
+import { getAuth, signOut, deleteUser, EmailAuthProvider, reauthenticateWithCredential, updatePassword } from "firebase/auth";
 import router from "@/router";
+import store from "@/store.js";
 
 const auth = getAuth();
 const user = auth.currentUser;
+
 const docRef = doc(db, "users", user.uid);
 
 // collection ref
 const colUsersRef = collection(db, "users");
 const colPostsRef = collection(db, "posts");
 
-// get users collection data
+/* get users collection data
 getDocs(colUsersRef)
   .then((snapshot) => {
     let users = [];
@@ -105,8 +107,12 @@ getDocs(colPostsRef)
   })
   .catch((error) => {});
 
+*/
+
 // queries
 const q = query(colUsersRef, where("username", "==", "test2@gmail.com"));
+const userMail = user.email;
+const queryPosts = query(colPostsRef, where("username", "==", userMail));
 
 export default {
   name: "settings",
@@ -117,9 +123,33 @@ export default {
       updateCountry: "",
       updateCity: "",
       updateZip: "",
+      store,
+      cards: [],
     };
   },
   methods: {
+    deleteProfile() {
+      const auth = getAuth();
+      const user = auth.currentUser;
+
+      // prompt the user to re-provide their sign-in credentials
+      let credential = EmailAuthProvider.credential(auth.currentUser.email, password);
+      reauthenticateWithCredential(auth.currentUser, credential).then((result) => {
+        // User successfully reauthenticated. New ID tokens should be valid.
+      });
+
+      deleteUser(user)
+        .then(() => {
+          // User deleted.
+          signOut(auth).then(() => {
+            router.replace({ name: "login" });
+          });
+        })
+        .catch(() => {
+          console.log("Error");
+        });
+    },
+
     updateProfile() {
       const updateData = {
         firstName: this.updateFirstName,
@@ -141,27 +171,10 @@ export default {
           })
           .catch(() => {});
       } else {
-        alert("Please insert all your profile information!");
+        this.$alert("Please insert all your profile information!");
       }
     },
-
-    deleteProfile() {
-      alert("Are you sure");
-
-      const userMail = user.email;
-      const queryPosts = query(colPostsRef, where("username", "==", userMail));
-
-      deleteUser(user)
-        .then(() => {
-          // User deleted.
-          signOut(auth).then(() => {
-            router.replace({ name: "login" });
-          });
-        })
-        .catch((error) => {});
-    },
   },
-  computed: {},
 };
 </script>
 

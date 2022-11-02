@@ -3,7 +3,6 @@ import VueRouter from 'vue-router'
 import home from '../views/Home.vue'
 import {getAuth} from '@/firebase'
 
-
 Vue.use(VueRouter)
 
 const routes = [
@@ -41,7 +40,6 @@ const routes = [
     },
     component: () => import(/* webpackChunkName: "about" */ '../views/Settings.vue')
   },
-  
 ]
 
 const router = new VueRouter({
