@@ -66,11 +66,11 @@ export default {
             username: this.username,
             firstName: this.firstName,
             lastName: this.lastName,
+            password: this.password,
           };
 
           this.$router.push({ name: "dashboard" });
           console.log("Successful registration!");
-          const user = userCredential.user;
 
           // kreiram novi collection sa podacima profila
           const userProfile = setDoc(doc(db, "users", userCredential.user.uid), userProfileData);

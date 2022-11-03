@@ -123,11 +123,9 @@ export default {
           newCards.push(card);
         }
       }
-
       return newCards;
     },
   },
-
   components: {
     cardComp,
   },

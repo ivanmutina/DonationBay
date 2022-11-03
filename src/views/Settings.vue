@@ -61,25 +61,24 @@
             </div>
           </div>
         </div>
-
         <!-- -->
       </div>
     </div>
+
     <div class="row">
       <div class="col-md-12">
-        <h1 class="mt-2">Your uploads</h1>
+        <h1 class="mt-2">Your uploads &#x1F4D1;</h1>
         <table class="table table-striped table-bordered mt-4">
           <tbody class="table-group-divider">
             <tr>
-              <th>Title</th>
-
-              <th>Cause</th>
-              <th>Pickup location</th>
+              <th class="col-3">Title</th>
+              <th class="col-3">Cause</th>
+              <th class="col-3">Delete?</th>
             </tr>
-            <tr>
-              <td>f</td>
-              <td>d</td>
-              <td></td>
+            <tr v-for="card in cards" v-bind:key="card">
+              <td>{{ card.title }}</td>
+              <td class="mt-2">{{ card.cause }}</td>
+              <td>&#x274C;</td>
             </tr>
           </tbody>
         </table>
@@ -104,30 +103,6 @@ const docRef = doc(db, "users", user.uid);
 const colUsersRef = collection(db, "users");
 const colPostsRef = collection(db, "posts");
 
-/* get users collection data
-getDocs(colUsersRef)
-  .then((snapshot) => {
-    let users = [];
-    snapshot.docs.forEach((doc) => {
-      users.push({ ...doc.data(), id: doc.id });
-    });
-    console.log(users);
-  })
-  .catch((error) => {});
-
-// get posts collection data
-getDocs(colPostsRef)
-  .then((snapshot) => {
-    let posts = [];
-    snapshot.docs.forEach((doc) => {
-      posts.push({ ...doc.data(), id: doc.id });
-    });
-    console.log(posts);
-  })
-  .catch((error) => {});
-
-*/
-
 // queries
 const q = query(colUsersRef, where("username", "==", "test2@gmail.com"));
 const userMail = user.email;
@@ -135,13 +110,10 @@ const queryPosts = query(colPostsRef, where("username", "==", userMail));
 
 export default {
   name: "settings",
-  data() {
+  data: () => {
     return {
       updateFirstName: "",
       updateLastName: "",
-      updateCountry: "",
-      updateCity: "",
-      updateZip: "",
       store,
       cards: [],
       username: "",
@@ -149,15 +121,31 @@ export default {
     };
   },
   methods: {
+    showUploads() {
+      getDocs(collection(db, "posts"))
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            const dat = doc.data();
+            if (dat.email == userMail) {
+              this.cards.push({
+                title: dat.title,
+                cause: dat.cause,
+              });
+            }
+          });
+        })
+        .catch((err) => {
+          console.log(err.massage);
+        });
+    },
+
     loginAndDelete() {
       signInWithEmailAndPassword(auth, this.username, this.password)
         .then((result) => {
           // Signed in
-
           deleteUser(user)
             .then(() => {
               // User deleted.
-
               signOut(auth).then(() => {
                 router.replace({ name: "home" });
               });
@@ -175,26 +163,22 @@ export default {
       const updateData = {
         firstName: this.updateFirstName,
         lastName: this.updateLastName,
-        country: this.updateCountry,
-        city: this.updateCity,
-        zipcode: this.updateZip,
       };
-
-      if (this.updateFirstName != "" && this.updateLastName != "" && this.updateCountry != "" && this.updateCity != "" && this.updateZip != "") {
+      if (this.updateFirstName != "" && this.updateLastName != "") {
         updateDoc(docRef, updateData)
           .then((docRef) => {
             console.log("Values has been updated");
             this.updateFirstName = "";
             this.updateLastName = "";
-            this.updateCountry = "";
-            this.updateCity = "";
-            this.updateZip = "";
           })
           .catch(() => {});
       } else {
         this.$alert("Please insert all your profile information!");
       }
     },
+  },
+  created: function () {
+    this.showUploads();
   },
 };
 </script>
