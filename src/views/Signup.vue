@@ -7,11 +7,11 @@
           <h1>Sign up! &#128274;</h1>
           <div class="col-md-6">
             <label for="name" class="form-label">First Name</label>
-            <input v-model="firstName" type="text" class="form-control" id="name" />
+            <input v-model="firstName" type="text" class="form-control" id="name" required />
           </div>
           <div class="col-md-6">
             <label for="lastName" class="form-label">Last Name</label>
-            <input v-model="lastName" type="text" class="form-control" id="lastName" />
+            <input v-model="lastName" type="text" class="form-control" id="lastName" required />
           </div>
           <div class="col-md-6">
             <label for="inputEmail" class="form-label">Email</label>

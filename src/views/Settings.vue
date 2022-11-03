@@ -9,7 +9,9 @@
       <div class="col-lg-6">
         <!-- -->
         <form class="row g-3 col-md-12">
-          <h1>Settings</h1>
+          <h1>
+            Hello <span v-for="cardz in profileCards" v-bind:key="cardz.id" style="color: #0d6efd"> {{ cardz.name }}</span>
+          </h1>
           <div class="col-12 form-text">If you want to change your profile information please fill out the form below &#128274;</div>
 
           <div class="col-md-6">
@@ -72,13 +74,15 @@
           <tbody class="table-group-divider">
             <tr>
               <th class="col-3">Title</th>
+              <th class="col-3">Price</th>
               <th class="col-3">Cause</th>
-              <th class="col-3">Delete?</th>
+              <th class="col-2">Delete?</th>
             </tr>
-            <tr v-for="card in cards" v-bind:key="card">
+            <tr v-for="card in uploadCards" v-bind:key="card.id">
               <td>{{ card.title }}</td>
+              <td class="mt-2">{{ card.price }}</td>
               <td class="mt-2">{{ card.cause }}</td>
-              <td>&#x274C;</td>
+              <td><a type="submit" @click.prevent=""> &#x274C; </a></td>
             </tr>
           </tbody>
         </table>
@@ -112,31 +116,50 @@ export default {
   name: "settings",
   data: () => {
     return {
+      profileCards: [],
       updateFirstName: "",
       updateLastName: "",
-      store,
-      cards: [],
       username: "",
       password: "",
+      uploadCards: [],
+      store,
     };
   },
   methods: {
-    showUploads() {
-      getDocs(collection(db, "posts"))
+    showFirstName() {
+      getDocs(collection(db, "users"))
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             const dat = doc.data();
-            if (dat.email == userMail) {
-              this.cards.push({
-                title: dat.title,
-                cause: dat.cause,
+            if (dat.username == userMail) {
+              this.profileCards.push({
+                name: dat.firstName,
+                id: dat.it,
               });
             }
           });
         })
-        .catch((err) => {
-          console.log(err.massage);
+        .catch(() => {
+          console.log("Error");
         });
+    },
+
+    updateProfile() {
+      const updateData = {
+        firstName: this.updateFirstName,
+        lastName: this.updateLastName,
+      };
+      if (this.updateFirstName != "" && this.updateLastName != "") {
+        updateDoc(docRef, updateData)
+          .then((docRef) => {
+            console.log("Values has been updated");
+            this.updateFirstName = "";
+            this.updateLastName = "";
+          })
+          .catch(() => {});
+      } else {
+        this.$alert("Please insert all your profile information!");
+      }
     },
 
     loginAndDelete() {
@@ -159,26 +182,31 @@ export default {
         });
     },
 
-    updateProfile() {
-      const updateData = {
-        firstName: this.updateFirstName,
-        lastName: this.updateLastName,
-      };
-      if (this.updateFirstName != "" && this.updateLastName != "") {
-        updateDoc(docRef, updateData)
-          .then((docRef) => {
-            console.log("Values has been updated");
-            this.updateFirstName = "";
-            this.updateLastName = "";
-          })
-          .catch(() => {});
-      } else {
-        this.$alert("Please insert all your profile information!");
-      }
+    showUploads() {
+      getDocs(collection(db, "posts"))
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            const dat = doc.data();
+            if (dat.email == userMail) {
+              this.uploadCards.push({
+                title: dat.title,
+                price: dat.price,
+                cause: dat.cause,
+                id: dat.it,
+              });
+            }
+          });
+        })
+        .catch(() => {
+          console.log("Error");
+        });
     },
   },
   created: function () {
     this.showUploads();
+  },
+  created: function () {
+    this.showFirstName();
   },
 };
 </script>
