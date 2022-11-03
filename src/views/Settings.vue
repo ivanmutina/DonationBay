@@ -11,26 +11,15 @@
         <form class="row g-3 col-md-12">
           <h1>Settings</h1>
           <div class="col-12 form-text">If you want to change your profile information please fill out the form below &#128274;</div>
+
           <div class="col-md-6">
             <label for="name" class="form-label">First Name</label>
             <input v-model="updateFirstName" type="text" class="form-control" id="name" placeholder="" />
           </div>
+
           <div class="col-md-6">
             <label for="lastName" class="form-label">Last Name</label>
             <input v-model="updateLastName" type="text" class="form-control" id="lastname" placeholder="" />
-          </div>
-
-          <div class="col-md-6">
-            <label for="inputCountry" class="form-label">Country</label>
-            <input v-model="updateCountry" type="text" class="form-control" id="inputcountry" placeholder="" />
-          </div>
-          <div class="col-md-4">
-            <label for="inputCity" class="form-label">City</label>
-            <input v-model="updateCity" type="text" class="form-control" id="inputcity" placeholder="" />
-          </div>
-          <div class="col-md-2">
-            <label for="inputZip" class="form-label">Zip</label>
-            <input v-model="updateZip" type="text" class="form-control" id="inputzip" placeholder="" />
           </div>
 
           <div class="col-12 mt-4">
@@ -39,9 +28,40 @@
           <div></div>
           <div class="col-12 form-text mt-2">Beware, you can't regain access once it's deleted&#10071;</div>
           <div class="col-12 mt-3">
-            <button type="button" @click.prevent="deleteProfile" class="btn btn-danger shadow">Delete account</button>
+            <button type="button" data-bs-toggle="modal" data-bs-target="#deleteModal" class="btn btn-danger shadow">Delete account</button>
           </div>
         </form>
+
+        <!-- Modal -->
+        <div class="modal fade modal-lg" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+              <div class="modal-body">
+                <div class="container-fluid">
+                  <form class="row g-3 col-md-12">
+                    <!-- -->
+                    <div class="col-3"></div>
+                    <div class="col">
+                      <div class="form-text mb-3 mt-2">Please log in again for confirmation</div>
+
+                      <label for="inputEmail" class="form-label">Email address</label>
+                      <input v-model="username" type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" />
+
+                      <label for="inputPass" class="form-label mt-3">Password</label>
+                      <input v-model="password" type="password" class="form-control" id="inputPass" />
+                    </div>
+                    <div class="col-3"></div>
+
+                    <div class="col-12 mt-4">
+                      <button type="button" data-bs-dismiss="modal" @click.prevent="loginAndDelete()" class="btn btn-danger shadow mb-3">Delete account</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- -->
       </div>
     </div>
@@ -58,7 +78,6 @@
             </tr>
             <tr>
               <td>f</td>
-
               <td>d</td>
               <td></td>
             </tr>
@@ -71,8 +90,8 @@
 
 <script>
 import { db, deleteObject, storage, ref } from "@/firebase.js";
-import { doc, getDoc, getDocs, updateDoc, deleteDoc, collection, setDoc, query, where } from "firebase/firestore";
-import { getAuth, signOut, deleteUser, EmailAuthProvider, reauthenticateWithCredential, updatePassword } from "firebase/auth";
+import { doc, getDoc, getDocs, updateDoc, deleteDoc, collection, query, where } from "firebase/firestore";
+import { getAuth, signOut, deleteUser, signInWithEmailAndPassword } from "firebase/auth";
 import router from "@/router";
 import store from "@/store.js";
 
@@ -125,28 +144,30 @@ export default {
       updateZip: "",
       store,
       cards: [],
+      username: "",
+      password: "",
     };
   },
   methods: {
-    deleteProfile() {
-      const auth = getAuth();
-      const user = auth.currentUser;
+    loginAndDelete() {
+      signInWithEmailAndPassword(auth, this.username, this.password)
+        .then((result) => {
+          // Signed in
 
-      // prompt the user to re-provide their sign-in credentials
-      let credential = EmailAuthProvider.credential(auth.currentUser.email, password);
-      reauthenticateWithCredential(auth.currentUser, credential).then((result) => {
-        // User successfully reauthenticated. New ID tokens should be valid.
-      });
+          deleteUser(user)
+            .then(() => {
+              // User deleted.
 
-      deleteUser(user)
-        .then(() => {
-          // User deleted.
-          signOut(auth).then(() => {
-            router.replace({ name: "login" });
-          });
+              signOut(auth).then(() => {
+                router.replace({ name: "home" });
+              });
+            })
+            .catch(() => {
+              console.log("Error");
+            });
         })
         .catch(() => {
-          console.log("Error");
+          this.$alert("Confirmation failed!");
         });
     },
 

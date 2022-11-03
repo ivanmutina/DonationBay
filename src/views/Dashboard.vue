@@ -3,13 +3,13 @@
     <div class="row align-items-center">
       <div class="col-lg-6">
         <h4>Upload image of stuff you wish to give as a donation.</h4>
-        <button type="button" class="btn btn-primary shadow-lg mt-4" data-bs-toggle="modal" data-bs-target="#giveawayModal">Start giving away!</button>
+        <button type="button" class="btn btn-primary shadow-lg mt-4" data-bs-toggle="modal" data-bs-target="#giveawayModal">Start giving away</button>
         <!-- Modal -->
         <div class="modal fade modal-lg" id="giveawayModal" tabindex="-1" aria-labelledby="giveawayModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="giveawayModalLabel">Upload</h5>
+                <h5 class="modal-title" id="giveawayModalLabel">Upload &#128228;</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
@@ -39,12 +39,7 @@
                         <label for="contact" class="mt-2 mb-2">Contact</label>
                         <input v-model="newImageContact" type="text" class="form-control" id="contact" placeholder="Phone number or email" />
 
-                        <button type="submit" class="btn btn-primary mt-3">
-                          Upload
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="13" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z" />
-                          </svg>
-                        </button>
+                        <button type="submit" class="btn btn-primary mt-3">Upload</button>
 
                         <!-- -->
                       </form>

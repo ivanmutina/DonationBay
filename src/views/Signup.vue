@@ -22,23 +22,10 @@
             <input v-model="password" type="password" class="form-control" id="inputPassword" placeholder="Should be atleast 6 characters" />
           </div>
 
-          <div class="col-md-6">
-            <label for="inputCountry" class="form-label">Country</label>
-            <input v-model="country" type="text" class="form-control" id="inputCountry" />
-          </div>
-          <div class="col-md-4">
-            <label for="inputCountry" class="form-label">City</label>
-            <input v-model="city" type="text" class="form-control" id="inputCity" />
-          </div>
-          <div class="col-md-2">
-            <label for="inputZip" class="form-label">Zip</label>
-            <input v-model="zipCode" type="number" class="form-control" id="inputZip" />
-          </div>
-
-          <div class="col-12 form-text">You will be automatically transferred if registration is successful.</div>
+          <div class="col-12 form-text mt-3">You will be automatically transferred if registration is successful.</div>
 
           <div class="col-12">
-            <button type="button" @click.prevent="signupClick" class="btn btn-primary shadow">Create account</button>
+            <button type="button" @click.prevent="signupClick" class="btn btn-primary shadow mt-2">Create account</button>
           </div>
         </form>
 
@@ -67,9 +54,6 @@ export default {
       lastName: "",
       username: "",
       password: "",
-      country: "",
-      city: "",
-      zipCode: "",
     };
   },
   methods: {
@@ -82,9 +66,6 @@ export default {
             username: this.username,
             firstName: this.firstName,
             lastName: this.lastName,
-            country: this.country,
-            city: this.city,
-            zipcode: this.zipCode,
           };
 
           this.$router.push({ name: "dashboard" });

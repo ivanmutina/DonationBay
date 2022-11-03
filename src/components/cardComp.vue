@@ -26,7 +26,7 @@
         <div class="modal-dialog modal-dialog-scrollable">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Thank you! &#x2764;</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Thank you! &#128420;</h5>
             </div>
             <div class="modal-body">
               <div class="container-fluid">
