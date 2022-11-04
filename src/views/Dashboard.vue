@@ -19,7 +19,7 @@
                     <div class="col-md">
                       <form @submit.prevent="postNewImage" class="mt-3" id="test">
                         <!-- -->
-                        <label for="imageTitle" class="mt-2 mb-2">Title</label>
+                        <label for="imageTitle" class="mt-2 mb-2">Title*</label>
                         <input v-model="newImageTitle" type="text" class="form-control mb-3" id="imageTitle" />
 
                         <croppa :width="350" :height="350" placeholder="Choose the image" v-model="imageReference"></croppa>
@@ -27,16 +27,16 @@
                         <label for="imageDescription" class="form-label mt-2">Description</label>
                         <textarea v-model="newImageDescription" class="form-control ml-2" id="imageDescription" rows="3"></textarea>
 
-                        <label for="imagePrice" class="mt-2 mb-2">Price</label>
+                        <label for="imagePrice" class="mt-2 mb-2">Price*</label>
                         <input v-model="newImagePrice" type="text" class="form-control" id="imagePrice" />
 
-                        <label for="imageCause" class="mt-2 mb-2">Cause</label>
+                        <label for="imageCause" class="mt-2 mb-2">Cause*</label>
                         <input v-model="newImageCause" type="text" class="form-control" placeholder="Donation is going for..." id="imageCause" />
 
                         <label for="imageLocation" class="mt-2 mb-2">Pickup location</label>
                         <input v-model="newImageLocation" type="text" class="form-control" id="imageLocation" />
 
-                        <label for="contact" class="mt-2 mb-2">Contact</label>
+                        <label for="contact" class="mt-2 mb-2">Contact*</label>
                         <input v-model="newImageContact" type="text" class="form-control" id="contact" placeholder="Phone number or email" />
 
                         <button type="submit" class="btn btn-primary mt-3">Upload</button>
@@ -163,65 +163,64 @@ export default {
     postNewImage() {
       console.log("Upload button clicked");
 
-      // pretvaranje bytova u pravu sliku
-      this.imageReference.generateBlob((blobData) => {
-        console.log(blobData);
+      if (this.newImageTitle != "" && this.newImagePrice != "" && this.newImageCause != "" && this.newImageContact != "") {
+        // pretvaranje bytova u pravu sliku
+        this.imageReference.generateBlob((blobData) => {
+          // putanja + ime korisnika + "/" + ime slike
+          let imageName = "posts/" + store.currentUser.email + "/" + Date.now() + ".png";
 
-        // putanja + ime korisnika + "/" + ime slike
-        let imageName = "posts/" + store.currentUser.email + "/" + Date.now() + ".png";
+          const storage = getStorage();
+          const storageRef = ref(storage, imageName);
 
-        const storage = getStorage();
-        const storageRef = ref(storage, imageName);
+          // 'file' comes from the Blob
+          uploadBytes(storageRef, blobData)
+            .then((result) => {
+              // uspjesno spremanje i dobijanje URL-a slike
+              getDownloadURL(storageRef).then((url) => {
+                const imageTitle = this.newImageTitle;
+                const imageDescription = this.newImageDescription;
+                const imagePrice = this.newImagePrice;
+                const imageCause = this.newImageCause;
+                const imageLocation = this.newImageLocation;
+                const imageContact = this.newImageContact;
 
-        // 'file' comes from the Blob
-        uploadBytes(storageRef, blobData)
-          .then((result) => {
-            console.log(result);
-            // uspjesno spremanje i dobijanje URL-a slike
-            getDownloadURL(storageRef).then((url) => {
-              console.log("Javni url: ", url);
-
-              const imageTitle = this.newImageTitle;
-              const imageDescription = this.newImageDescription;
-              const imagePrice = this.newImagePrice;
-              const imageCause = this.newImageCause;
-              const imageLocation = this.newImageLocation;
-              const imageContact = this.newImageContact;
-
-              // Add a new document with a generated id.
-              const docRef = addDoc(collection(db, "posts"), {
-                title: imageTitle,
-                url: url,
-                desc: imageDescription,
-                email: store.currentUser.email,
-                price: imagePrice,
-                cause: imageCause,
-                location: imageLocation,
-                contact: imageContact,
-                posted_at: Date.now(),
-              })
-                .then(() => {
-                  console.log("Spremljeno", doc);
-                  this.newImageTitle = "";
-                  this.newImageDescription = "";
-                  this.newImagePrice = "";
-                  this.newImageCause = "";
-                  this.newImageLocation = "";
-                  this.newImageContact = "";
-                  this.imageReference.remove();
-
-                  // dohvacam da se kartica odmah pokaze pri postanju
-                  this.getPosts();
+                // Add a new document with a generated id.
+                const docRef = addDoc(collection(db, "posts"), {
+                  title: imageTitle,
+                  url: url,
+                  desc: imageDescription,
+                  email: store.currentUser.email,
+                  price: imagePrice,
+                  cause: imageCause,
+                  location: imageLocation,
+                  contact: imageContact,
+                  posted_at: Date.now(),
                 })
-                .catch(() => {
-                  console.log("Unsuccessful upload");
-                });
+                  .then(() => {
+                    console.log("Spremljeno", doc);
+                    this.newImageTitle = "";
+                    this.newImageDescription = "";
+                    this.newImagePrice = "";
+                    this.newImageCause = "";
+                    this.newImageLocation = "";
+                    this.newImageContact = "";
+                    this.imageReference.remove();
+
+                    // dohvacam da se kartica odmah pokaze pri postanju
+                    this.getPosts();
+                  })
+                  .catch(() => {
+                    console.log("Unsuccessful upload");
+                  });
+              });
+            })
+            .catch(() => {
+              console.log("Error");
             });
-          })
-          .catch(() => {
-            console.log("Error");
-          });
-      });
+        });
+      } else {
+        this.$alert("Please fill in the required information");
+      }
     },
   },
 };

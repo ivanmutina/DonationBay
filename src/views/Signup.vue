@@ -59,25 +59,29 @@ export default {
   methods: {
     // kada korisnik stisne button
     signupClick() {
-      createUserWithEmailAndPassword(auth, this.username, this.password)
-        .then((userCredential) => {
-          // Signed in
-          const userProfileData = {
-            username: this.username,
-            firstName: this.firstName,
-            lastName: this.lastName,
-            password: this.password,
-          };
+      if (this.firstName != "" && this.lastName != "") {
+        createUserWithEmailAndPassword(auth, this.username, this.password)
+          .then((userCredential) => {
+            // Signed in
+            const userProfileData = {
+              username: this.username,
+              firstName: this.firstName,
+              lastName: this.lastName,
+              password: this.password,
+            };
 
-          this.$router.push({ name: "dashboard" });
-          console.log("Successful registration!");
+            this.$router.push({ name: "dashboard" });
+            console.log("Successful registration!");
 
-          // kreiram novi collection sa podacima profila
-          const userProfile = setDoc(doc(db, "users", userCredential.user.uid), userProfileData);
-        })
-        .catch(() => {
-          this.$alert("Registration failed. Please try again!");
-        });
+            // kreiram novi collection sa podacima profila
+            const userProfile = setDoc(doc(db, "users", userCredential.user.uid), userProfileData);
+          })
+          .catch(() => {
+            this.$alert("Registration failed. Please try again!");
+          });
+      } else {
+        this.$alert("Please fill in the required information");
+      }
     },
   },
 };

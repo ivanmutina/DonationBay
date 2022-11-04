@@ -93,14 +93,13 @@
 
 <script>
 import { db, deleteObject, storage, ref } from "@/firebase.js";
-import { doc, getDoc, getDocs, updateDoc, deleteDoc, collection, query, where } from "firebase/firestore";
+import { doc, getDocs, updateDoc, deleteDoc, collection, query, where } from "firebase/firestore";
 import { getAuth, signOut, deleteUser, signInWithEmailAndPassword } from "firebase/auth";
 import router from "@/router";
 import store from "@/store.js";
 
 const auth = getAuth();
 const user = auth.currentUser;
-
 const docRef = doc(db, "users", user.uid);
 
 // collection ref
@@ -204,8 +203,6 @@ export default {
   },
   created: function () {
     this.showUploads();
-  },
-  created: function () {
     this.showFirstName();
   },
 };
