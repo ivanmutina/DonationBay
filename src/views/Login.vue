@@ -49,7 +49,7 @@ export default {
         .then((result) => {
           // Signed in
           console.log("Uspjesna prijava");
-          this.$router.replace({ name: "dashboard" });
+          this.$router.go({ name: "dashboard" });
         })
         .catch(() => {
           this.$alert("Login failed. Please try again!");

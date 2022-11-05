@@ -9,9 +9,7 @@
       <div class="col-lg-6">
         <!-- -->
         <form class="row g-3 col-md-12">
-          <h1>
-            Hello <span v-for="cardz in profileCards" v-bind:key="cardz.id" style="color: #0d6efd"> {{ cardz.name }}</span>
-          </h1>
+          <h1>Settings</h1>
           <div class="col-12 form-text">If you want to change your profile information please fill out the form below &#128274;</div>
 
           <div class="col-md-6">
@@ -44,7 +42,7 @@
                     <!-- -->
                     <div class="col-3"></div>
                     <div class="col">
-                      <div class="form-text mb-3 mt-2">Please log in again for confirmation</div>
+                      <div class="form-text mb-3 mt-2">Please refresh the page and log in again for confirmation</div>
 
                       <label for="inputEmail" class="form-label">Email address</label>
                       <input v-model="username" type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" />
@@ -69,6 +67,8 @@
 
     <div class="row">
       <div class="col-md-12">
+        <uploadList />
+        <!-- 
         <h1 class="mt-2">Your uploads &#x1F4D1;</h1>
         <table class="table table-striped table-bordered mt-4">
           <tbody class="table-group-divider">
@@ -85,7 +85,8 @@
               <td><a type="submit" @click.prevent=""> &#x274C; </a></td>
             </tr>
           </tbody>
-        </table>
+        </table>  
+        -->
       </div>
     </div>
   </div>
@@ -97,6 +98,7 @@ import { doc, getDocs, updateDoc, deleteDoc, collection, query, where } from "fi
 import { getAuth, signOut, deleteUser, signInWithEmailAndPassword } from "firebase/auth";
 import router from "@/router";
 import store from "@/store.js";
+import uploadList from "@/components/uploadList.vue";
 
 const auth = getAuth();
 const user = auth.currentUser;
@@ -115,7 +117,6 @@ export default {
   name: "settings",
   data: () => {
     return {
-      profileCards: [],
       updateFirstName: "",
       updateLastName: "",
       username: "",
@@ -124,25 +125,10 @@ export default {
       store,
     };
   },
+  components: {
+    uploadList,
+  },
   methods: {
-    showFirstName() {
-      getDocs(collection(db, "users"))
-        .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            const dat = doc.data();
-            if (dat.username == userMail) {
-              this.profileCards.push({
-                name: dat.firstName,
-                id: dat.it,
-              });
-            }
-          });
-        })
-        .catch(() => {
-          console.log("Error");
-        });
-    },
-
     updateProfile() {
       const updateData = {
         firstName: this.updateFirstName,
@@ -181,6 +167,7 @@ export default {
         });
     },
 
+    /*
     showUploads() {
       getDocs(collection(db, "posts"))
         .then((querySnapshot) => {
@@ -200,10 +187,11 @@ export default {
           console.log("Error");
         });
     },
+
+    */
   },
   created: function () {
-    this.showUploads();
-    this.showFirstName();
+    // this.showUploads();
   },
 };
 </script>
