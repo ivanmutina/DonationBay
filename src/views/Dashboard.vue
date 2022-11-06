@@ -195,9 +195,9 @@ export default {
                   location: imageLocation,
                   contact: imageContact,
                   posted_at: Date.now(),
+                  idd: Date.now().toString(36) + Math.random().toString(36).substr(2),
                 })
                   .then(() => {
-                    console.log("Spremljeno", doc);
                     this.newImageTitle = "";
                     this.newImageDescription = "";
                     this.newImagePrice = "";

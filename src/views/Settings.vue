@@ -68,50 +68,54 @@
     <div class="row">
       <div class="col-md-12">
         <uploadList />
-        <!-- 
-        <h1 class="mt-2">Your uploads &#x1F4D1;</h1>
-        <table class="table table-striped table-bordered mt-4">
-          <tbody class="table-group-divider">
-            <tr>
-              <th class="col-3">Title</th>
-              <th class="col-3">Price</th>
-              <th class="col-3">Cause</th>
-              <th class="col-2">Delete?</th>
-            </tr>
-            <tr v-for="card in uploadCards" v-bind:key="card.id">
-              <td>{{ card.title }}</td>
-              <td class="mt-2">{{ card.price }}</td>
-              <td class="mt-2">{{ card.cause }}</td>
-              <td><a type="submit" @click.prevent=""> &#x274C; </a></td>
-            </tr>
-          </tbody>
-        </table>  
-        -->
+      </div>
+    </div>
+
+    <div class="row col-lg">
+      <div class="col-2"></div>
+      <div class="col-8">
+        <!-- -->
+        <form class="row g-3 col-md-12 mt-2 delete">
+          <div class="col-12 form-text">Please copy and paste ID of offer you want to delete &#x2B07;</div>
+          <div class="col-4"></div>
+          <div class="col-4">
+            <input type="text" class="form-control" name="id" />
+          </div>
+          <div class="col-4"></div>
+          <div class="col-12 mt-3 mb-5">
+            <button @click="click()" class="btn btn-danger shadow">Delete offer</button>
+          </div>
+        </form>
+        <!-- -->
       </div>
     </div>
   </div>
 </template>
 
-<script>
-import { db, deleteObject, storage, ref } from "@/firebase.js";
-import { doc, getDocs, updateDoc, deleteDoc, collection, query, where } from "firebase/firestore";
+<script async>
+import { db } from "@/firebase.js";
+import { doc, updateDoc, deleteDoc, collection, query, where } from "firebase/firestore";
 import { getAuth, signOut, deleteUser, signInWithEmailAndPassword } from "firebase/auth";
 import router from "@/router";
-import store from "@/store.js";
 import uploadList from "@/components/uploadList.vue";
+import { useEventListener } from "@vueuse/core";
 
 const auth = getAuth();
 const user = auth.currentUser;
 const docRef = doc(db, "users", user.uid);
 
-// collection ref
-const colUsersRef = collection(db, "users");
-const colPostsRef = collection(db, "posts");
+/* deleting document
+const deletePostForm = document.querySelector(".delete");
+deletePostForm.addEventListener("submit", (e) => {
+  e.preventDefault();
 
-// queries
-const q = query(colUsersRef, where("username", "==", "test2@gmail.com"));
-const userMail = user.email;
-const queryPosts = query(colPostsRef, where("username", "==", userMail));
+  const postsRef = doc(db, "posts", deletePostForm.id.value);
+  deleteDoc(postsRef).then(() => {
+    deletePostForm.reset();
+  });
+});
+
+*/
 
 export default {
   name: "settings",
@@ -122,7 +126,6 @@ export default {
       username: "",
       password: "",
       uploadCards: [],
-      store,
     };
   },
   components: {
@@ -155,7 +158,7 @@ export default {
             .then(() => {
               // User deleted.
               signOut(auth).then(() => {
-                router.replace({ name: "home" });
+                router.go({ name: "home" });
               });
             })
             .catch(() => {
@@ -166,32 +169,6 @@ export default {
           this.$alert("Confirmation failed!");
         });
     },
-
-    /*
-    showUploads() {
-      getDocs(collection(db, "posts"))
-        .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            const dat = doc.data();
-            if (dat.email == userMail) {
-              this.uploadCards.push({
-                title: dat.title,
-                price: dat.price,
-                cause: dat.cause,
-                id: dat.it,
-              });
-            }
-          });
-        })
-        .catch(() => {
-          console.log("Error");
-        });
-    },
-
-    */
-  },
-  created: function () {
-    // this.showUploads();
   },
 };
 </script>

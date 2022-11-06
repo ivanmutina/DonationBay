@@ -1,20 +1,21 @@
 <template>
   <div class="row">
     <div class="col-md-12">
-      <h1 class="mt-2">Your uploads &#x1F4D1;</h1>
+      <h1 class="mt-2">Uploads &#x1F4D1;</h1>
+      <div class="col-12 form-text">Your offers will be shown down below if you made any.</div>
       <table class="table table-striped table-bordered mt-4">
         <tbody class="table-group-divider">
           <tr>
             <th class="col-3">Title</th>
             <th class="col-3">Price</th>
             <th class="col-3">Cause</th>
-            <th class="col-2">Delete?</th>
+            <th class="col-2">ID</th>
           </tr>
-          <tr v-for="card in uploadCards" v-bind:key="card.id">
+          <tr v-for="card in Cards" v-bind:key="card.id">
             <td>{{ card.title }}</td>
-            <td class="mt-2">{{ card.price }}</td>
-            <td class="mt-2">{{ card.cause }}</td>
-            <td><a type="submit" @click.prevent="deleteUpload()"> &#x274C; </a></td>
+            <td>{{ card.price }}</td>
+            <td>{{ card.cause }}</td>
+            <td>{{ card.id }}</td>
           </tr>
         </tbody>
       </table>
@@ -24,17 +25,22 @@
 
 <script>
 import { db } from "@/firebase.js";
-import { getDocs, updateDoc, deleteDoc, collection } from "firebase/firestore";
+import { getDocs, updateDoc, doc, deleteDoc, collection, query, where } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 const auth = getAuth();
 const user = auth.currentUser;
 const userMail = user.email;
+const userUid = auth.currentUser.uid;
+
+const colPostsRef = collection(db, "posts");
+// queries
+const queryPosts = query(colPostsRef, where("email", "==", userMail));
 
 export default {
   data() {
     return {
-      uploadCards: [],
+      Cards: [],
     };
   },
   methods: {
@@ -44,11 +50,11 @@ export default {
           querySnapshot.forEach((doc) => {
             const dat = doc.data();
             if (dat.email == userMail) {
-              this.uploadCards.push({
+              this.Cards.push({
                 title: dat.title,
                 price: dat.price,
                 cause: dat.cause,
-                id: dat.it,
+                id: dat.idd,
               });
             }
           });
@@ -57,7 +63,6 @@ export default {
           console.log("Error");
         });
     },
-    deleteUpload() {},
   },
   created: function () {
     this.showUploads();

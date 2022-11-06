@@ -70,7 +70,10 @@ export default {
               password: this.password,
             };
 
-            this.$router.replace({ name: "dashboard" });
+            this.$router
+              .replace({ name: "dashboard" })
+              .then(() => {})
+              .catch(() => {});
             console.log("Successful registration!");
 
             // kreiram novi collection sa podacima profila
