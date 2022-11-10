@@ -2,7 +2,7 @@
   <div class="container row gap-5 align-items-center justify-content-center">
     <div class="row align-items-center">
       <div class="col-lg-6">
-        <h4>Upload image of stuff you wish to give as a donation.</h4>
+        <h4 class="mt-4 mt-md-4 mt-lg-0">Upload image of stuff you wish to give as a donation.</h4>
         <button type="button" class="btn btn-primary shadow-lg mt-4" data-bs-toggle="modal" data-bs-target="#giveawayModal">Start giving away</button>
         <!-- Modal -->
         <div class="modal fade modal-lg" id="giveawayModal" tabindex="-1" aria-labelledby="giveawayModalLabel" aria-hidden="true">
@@ -93,7 +93,7 @@
 <script>
 import cardComp from "@/components/cardComp.vue";
 import { db, getStorage, ref, uploadBytes, getDownloadURL } from "@/firebase.js";
-import { doc, collection, addDoc, getDocs, orderBy, query, limit } from "firebase/firestore";
+import { doc, collection, addDoc, getDocs, orderBy, query, limit, updateDoc } from "firebase/firestore";
 import store from "@/store.js";
 
 export default {
@@ -195,9 +195,8 @@ export default {
                   location: imageLocation,
                   contact: imageContact,
                   posted_at: Date.now(),
-                  idd: Date.now().toString(36) + Math.random().toString(36).substr(2),
                 })
-                  .then(() => {
+                  .then((docRef) => {
                     this.newImageTitle = "";
                     this.newImageDescription = "";
                     this.newImagePrice = "";
@@ -208,6 +207,14 @@ export default {
 
                     // dohvacam da se kartica odmah pokaze pri postanju
                     this.getPosts();
+
+                    //get new document id an update it to the file as id field.
+                    const fileID = docRef.id;
+                    console.log("added file:", fileID);
+                    const updateDocId = doc(db, "posts", fileID);
+                    updateDoc(updateDocId, {
+                      post_id: fileID,
+                    });
                   })
                   .catch(() => {
                     console.log("Unsuccessful upload");

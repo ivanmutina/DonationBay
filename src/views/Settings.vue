@@ -79,43 +79,29 @@
           <div class="col-12 form-text">Please copy and paste ID of offer you want to delete &#x2B07;</div>
           <div class="col-4"></div>
           <div class="col-4">
-            <input type="text" class="form-control" name="id" />
+            <input v-model="text" type="text" class="form-control" name="id" />
           </div>
           <div class="col-4"></div>
-          <div class="col-12 mt-3 mb-5">
-            <button @click="click()" class="btn btn-danger shadow">Delete offer</button>
-          </div>
         </form>
+        <div class="col-12 mt-3 mb-5">
+          <button @click="deleteOffer()" class="btn btn-danger shadow">Delete offer</button>
+        </div>
         <!-- -->
       </div>
     </div>
   </div>
 </template>
 
-<script async>
+<script>
 import { db } from "@/firebase.js";
-import { doc, updateDoc, deleteDoc, collection, query, where } from "firebase/firestore";
+import { doc, updateDoc, deleteDoc, getDoc } from "firebase/firestore";
 import { getAuth, signOut, deleteUser, signInWithEmailAndPassword } from "firebase/auth";
 import router from "@/router";
 import uploadList from "@/components/uploadList.vue";
-import { useEventListener } from "@vueuse/core";
 
 const auth = getAuth();
 const user = auth.currentUser;
 const docRef = doc(db, "users", user.uid);
-
-/* deleting document
-const deletePostForm = document.querySelector(".delete");
-deletePostForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-
-  const postsRef = doc(db, "posts", deletePostForm.id.value);
-  deleteDoc(postsRef).then(() => {
-    deletePostForm.reset();
-  });
-});
-
-*/
 
 export default {
   name: "settings",
@@ -125,7 +111,7 @@ export default {
       updateLastName: "",
       username: "",
       password: "",
-      uploadCards: [],
+      text: "",
     };
   },
   components: {
@@ -140,7 +126,7 @@ export default {
       if (this.updateFirstName != "" && this.updateLastName != "") {
         updateDoc(docRef, updateData)
           .then((docRef) => {
-            console.log("Values has been updated");
+            this.$alert("Your profile information has been updated!");
             this.updateFirstName = "";
             this.updateLastName = "";
           })
@@ -149,7 +135,6 @@ export default {
         this.$alert("Please insert all your profile information!");
       }
     },
-
     loginAndDelete() {
       signInWithEmailAndPassword(auth, this.username, this.password)
         .then((result) => {
@@ -168,6 +153,18 @@ export default {
         .catch(() => {
           this.$alert("Confirmation failed!");
         });
+    },
+    async deleteOffer() {
+      const postsRef = doc(db, "posts", this.text);
+      const docSnap = await getDoc(postsRef);
+
+      if (docSnap.exists()) {
+        deleteDoc(doc(db, "posts", this.text)).then(() => {
+          this.$alert("Your offer has been deleted. Please refresh the page!");
+        });
+      } else {
+        this.$alert("Please input correct ID");
+      }
     },
   },
 };
