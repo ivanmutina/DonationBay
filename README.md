@@ -11,7 +11,7 @@ DonationBay je web mjesto na kojem svatko može ponuditi nešto (stvar, robu, pr
 
 ## Javni link
 
-Web:
+Web: https://donationbay.netlify.app/
 
 ## Prototip
 
