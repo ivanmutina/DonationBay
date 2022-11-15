@@ -81,7 +81,7 @@
         <div class="content">
           <div class="container">
             <div class="row">
-              <card-comp class="col-5 mb-3" v-for="card in filteredCards" :key="card.id" :info="card" />
+              <card-comp class="col-sm-12 col-md-6 col-xl-4 mb-3" v-for="card in filteredCards" :key="card.id" :info="card" />
             </div>
           </div>
         </div>
@@ -210,7 +210,6 @@ export default {
 
                     //get new document id an update it to the file as id field.
                     const fileID = docRef.id;
-                    console.log("added file:", fileID);
                     const updateDocId = doc(db, "posts", fileID);
                     updateDoc(updateDocId, {
                       post_id: fileID,
