@@ -76,7 +76,7 @@
       <div class="col-8">
         <!-- -->
         <form class="row g-3 col-md-12 mt-2 delete">
-          <div class="col-12 form-text">Please copy and paste ID of offer you want to delete &#x2B07;</div>
+          <div class="col-12 form-text">Please copy and paste ID of an offer you want to delete &#x2B07;</div>
           <div class="col-4"></div>
           <div class="col-4">
             <input v-model="text" type="text" class="form-control" name="id" />
@@ -84,7 +84,7 @@
           <div class="col-4"></div>
         </form>
         <div class="col-12 mt-3 mb-5">
-          <button @click="deleteOffer()" class="btn btn-danger shadow">Delete offer</button>
+          <button @click="deleteOffer()" class="btn btn-danger shadow">Delete</button>
         </div>
         <!-- -->
       </div>
