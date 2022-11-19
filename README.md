@@ -15,4 +15,4 @@ Web: https://donationbay.netlify.app/
 
 ## Prototip
 
-[Figma][https://www.figma.com/proto/jhulh4bvz2vjmapllsfa4w/donationbay?node-id=2%3a6&scaling=contain&page-id=0%3a1&starting-point-node-id=2%3a6]
+[Figma](https://www.figma.com/proto/JhUlH4bvZ2vJMAPlLsfA4W/DonationBay?node-id=2%3A6&scaling=contain&page-id=0%3A1&starting-point-node-id=2%3A6)
